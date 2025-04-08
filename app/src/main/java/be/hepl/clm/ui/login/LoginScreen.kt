@@ -34,7 +34,7 @@ import be.hepl.clm.ui.theme.loginButtonColors
 
 
 @Composable
-fun LoginMainScreen(modifier: Modifier = Modifier, navController: NavController, loginViewModel: LoginViewModel) {
+fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, loginViewModel: LoginViewModel) {
     Column(
         modifier = modifier
             .padding(horizontal = 58.dp)
