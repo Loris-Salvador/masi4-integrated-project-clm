@@ -1,13 +1,13 @@
 package be.hepl.clm.ui.navigation
 
-
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import be.hepl.clm.domain.LoginMethod
+import be.hepl.clm.ui.login.ChallengeScreen
 import be.hepl.clm.ui.login.LoginChoiceScreen
 import be.hepl.clm.ui.login.LoginScreen
 import be.hepl.clm.ui.login.LoginViewModel
@@ -27,6 +27,11 @@ fun AppNavHost(modifier: Modifier) {
         }
         composable(LOGIN_CHOICE) {
             LoginChoiceScreen(modifier, navController, loginViewModel)
+        }
+        composable(Destinations.CHALLENGE_WITH_ARG) { backStackEntry ->
+            val methodString = backStackEntry.arguments?.getString("method") ?: "EMAIL"
+            val method = LoginMethod.valueOf(methodString)
+            ChallengeScreen(modifier, method, navController, loginViewModel)
         }
     }
 }

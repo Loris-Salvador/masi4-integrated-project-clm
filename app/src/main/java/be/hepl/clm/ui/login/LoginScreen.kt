@@ -173,7 +173,7 @@ fun LoginClickableText(text: String, navController: NavController) {
         modifier = Modifier.pointerInput(Unit) {
             detectTapGestures(
                 onTap = {
-                    navController.navigate("signup")
+                    //navController.navigate("")
                 }
             )
         },

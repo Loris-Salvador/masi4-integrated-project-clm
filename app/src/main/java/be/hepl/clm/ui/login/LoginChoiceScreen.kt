@@ -24,6 +24,7 @@ fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavControlle
         modifier = modifier
             .padding(horizontal = 58.dp)
             .padding(bottom = 100.dp)
+            .padding()
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -41,6 +42,7 @@ fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavControlle
             Button(
                 onClick = {
                     loginViewModel.onSMSChoiceClick()
+                    navController.navigate("challenge/SMS")
                 },
                 modifier = Modifier
                     .width(140.dp)
@@ -53,6 +55,8 @@ fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavControlle
             Button(
                 onClick = {
                     loginViewModel.onEmailChoiceClick()
+                    navController.navigate("challenge/EMAIL")
+
                 },
                 modifier = Modifier
                     .width(140.dp)
