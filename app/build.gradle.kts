@@ -10,6 +10,11 @@ android {
     namespace = "be.hepl.clm"
     compileSdk = 35
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId = "be.hepl.clm"
         minSdk = 24
@@ -42,9 +47,10 @@ android {
 }
 
 dependencies {
-    implementation("com.google.dagger:hilt-android:2.48") // Use same version as plugin
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.hilt.android.v2511)
+    kapt(libs.hilt.android.compiler.v2511)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
