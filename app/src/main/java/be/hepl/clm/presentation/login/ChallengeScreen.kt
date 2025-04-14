@@ -1,4 +1,4 @@
-package be.hepl.clm.ui.login
+package be.hepl.clm.presentation.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,8 +30,9 @@ fun ChallengeScreen(
     modifier: Modifier = Modifier,
     method: LoginMethod,
     navController: NavController,
-    loginViewModel: LoginViewModel,
+    loginViewModel: LoginViewModel
 ) {
+
     var code by remember { mutableStateOf("") }
 
     Column(
@@ -50,18 +51,13 @@ fun ChallengeScreen(
         Text("Veuillez entrer le code reçu", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(16.dp))
 
-        CodeInputField(code = code, onCodeChange = { code = it })
+        CodeInputField(loginViewModel)
 
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick =
-            {
-                println("Code entré : $code")
-
-
-            },
-            enabled = code.length == 6
+            onClick = { loginViewModel.onValidateButtonClick(method) },
+            enabled = loginViewModel.challenge.length == 6
         ) {
             Text("Valider")
         }
@@ -71,15 +67,12 @@ fun ChallengeScreen(
 
 
 @Composable
-fun CodeInputField(
-    code: String,
-    onCodeChange: (String) -> Unit
-) {
+fun CodeInputField(loginViewModel: LoginViewModel) {
     OutlinedTextField(
-        value = code,
+        value = loginViewModel.challenge,
         onValueChange = {
             if (it.length <= 6 && it.all { char -> char.isDigit() }) {
-                onCodeChange(it)
+                loginViewModel.onChallengeChanged(it)
             }
         },
         placeholder = { Text("XXXXXX") },

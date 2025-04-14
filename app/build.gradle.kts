@@ -47,9 +47,11 @@ android {
 }
 
 dependencies {
+    implementation(libs.datastore.preferences)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.hilt.android.v2511)
+    implementation(libs.androidx.hilt.navigation.compose.v110)
     kapt(libs.hilt.android.compiler.v2511)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

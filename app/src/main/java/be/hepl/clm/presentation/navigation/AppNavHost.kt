@@ -1,25 +1,26 @@
-package be.hepl.clm.ui.navigation
+package be.hepl.clm.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import be.hepl.clm.domain.LoginMethod
-import be.hepl.clm.ui.login.ChallengeScreen
-import be.hepl.clm.ui.login.LoginChoiceScreen
-import be.hepl.clm.ui.login.LoginScreen
-import be.hepl.clm.ui.login.LoginViewModel
-import be.hepl.clm.ui.navigation.Destinations.LOGIN
-import be.hepl.clm.ui.navigation.Destinations.LOGIN_CHOICE
+import be.hepl.clm.presentation.login.ChallengeScreen
+import be.hepl.clm.presentation.login.LoginChoiceScreen
+import be.hepl.clm.presentation.login.LoginScreen
+import be.hepl.clm.presentation.login.LoginViewModel
+import be.hepl.clm.presentation.navigation.Destinations.LOGIN
+import be.hepl.clm.presentation.navigation.Destinations.LOGIN_CHOICE
 
 
 @Composable
 fun AppNavHost(modifier: Modifier) {
     val navController = rememberNavController()
 
-    val loginViewModel: LoginViewModel = viewModel()
+    val loginViewModel: LoginViewModel = hiltViewModel()
+
 
     NavHost(navController = navController, startDestination = LOGIN) {
         composable(LOGIN) {

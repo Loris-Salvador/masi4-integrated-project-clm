@@ -1,4 +1,4 @@
-package be.hepl.clm.ui.login
+package be.hepl.clm.presentation.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,10 +16,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import be.hepl.clm.ui.theme.loginButtonColors
+import be.hepl.clm.presentation.theme.loginButtonColors
 
 @Composable
 fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavController, loginViewModel: LoginViewModel) {
+
+
     Column(
         modifier = modifier
             .padding(horizontal = 58.dp)
@@ -41,7 +43,7 @@ fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavControlle
         ) {
             Button(
                 onClick = {
-                    loginViewModel.onSMSChoiceClick()
+                    loginViewModel.onSMSChoiceButtonClick()
                     navController.navigate("challenge/SMS")
                 },
                 modifier = Modifier
@@ -54,7 +56,7 @@ fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavControlle
 
             Button(
                 onClick = {
-                    loginViewModel.onEmailChoiceClick()
+                    loginViewModel.onEmailChoiceButtonClick()
                     navController.navigate("challenge/EMAIL")
 
                 },

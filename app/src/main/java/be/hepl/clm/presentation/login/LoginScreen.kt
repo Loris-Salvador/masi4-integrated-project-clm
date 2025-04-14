@@ -1,4 +1,4 @@
-package be.hepl.clm.ui.login
+package be.hepl.clm.presentation.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -29,12 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import be.hepl.clm.R
-import be.hepl.clm.ui.theme.Blue
-import be.hepl.clm.ui.theme.loginButtonColors
+import be.hepl.clm.presentation.theme.Blue
+import be.hepl.clm.presentation.theme.loginButtonColors
 
 
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, loginViewModel: LoginViewModel) {
+
     Column(
         modifier = modifier
             .padding(horizontal = 58.dp)

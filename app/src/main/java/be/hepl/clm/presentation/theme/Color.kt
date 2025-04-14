@@ -1,4 +1,4 @@
-package be.hepl.clm.ui.theme
+package be.hepl.clm.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

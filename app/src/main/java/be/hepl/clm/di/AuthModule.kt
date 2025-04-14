@@ -1,5 +1,6 @@
 package be.hepl.clm.di
 
+import be.hepl.clm.data.auth.AuthRepository
 import be.hepl.clm.data.auth.AuthRepositoryImpl
 import be.hepl.clm.data.auth.RetrofitAuthApi
 import dagger.Module
@@ -12,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 object AuthModule {
 
     @Provides
-    fun provideAuthRepository(api: RetrofitAuthApi): AuthRepositoryImpl {
+    fun provideAuthRepository(api: RetrofitAuthApi): AuthRepository {
         return AuthRepositoryImpl(api)
     }
 }

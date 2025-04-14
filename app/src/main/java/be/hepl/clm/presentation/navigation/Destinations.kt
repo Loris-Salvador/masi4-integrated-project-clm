@@ -1,4 +1,4 @@
-package be.hepl.clm.ui.navigation
+package be.hepl.clm.presentation.navigation
 
 object Destinations {
     const val LOGIN = "login"
