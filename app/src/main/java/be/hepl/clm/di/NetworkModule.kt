@@ -21,9 +21,4 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
-    @Provides
-    fun provideAuthApi(retrofit: Retrofit): RetrofitAuthApi {
-        return retrofit.create(RetrofitAuthApi::class.java)
-    }
 }

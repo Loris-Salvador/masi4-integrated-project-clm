@@ -1,6 +1,5 @@
 package be.hepl.clm.presentation.login
 
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,10 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import be.hepl.clm.data.auth.AuthRepository
 import be.hepl.clm.data.token.TokenRepository
-import be.hepl.clm.data.token.saveToken
 import be.hepl.clm.domain.LoginMethod
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,20 +28,17 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
     }
 
     fun onSMSChoiceButtonClick() {
-
         viewModelScope.launch {
-            val result =authRepository.login(email, password)
+            val result = authRepository.phoneLogin(email, password)
             println(result)
         }
     }
 
     fun onEmailChoiceButtonClick() {
-
         viewModelScope.launch {
-            val result =authRepository.login(email, password)
+            val result =authRepository.emailLogin(email, password)
             println(result)
         }
-
     }
 
     fun onChallengeChanged(newChallenge: String) {
@@ -52,7 +46,7 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
     }
 
 
-    fun onValidateButtonClick(loginMethod: LoginMethod) {
+    fun onValidateButtonClick(loginMethod: LoginMethod, onSuccessNavigate: () -> Unit) {
 
         if(loginMethod == LoginMethod.EMAIL)
         {
@@ -60,10 +54,8 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
                 val result = authRepository.emailChallenge(email, challenge)
 
                 result.onSuccess { response ->
-                    val accessToken = response.accessToken
-                    tokenRepository.saveToken(accessToken)
-                    println("Access token: $accessToken")
-                    println(tokenRepository.getToken())
+                    tokenRepository.saveToken(response.accessToken)
+                    onSuccessNavigate()
                 }
 
                 result.onFailure { e ->
@@ -77,9 +69,8 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
                 val result = authRepository.phoneChallenge(email, challenge)
 
                 result.onSuccess { response ->
-                    val accessToken = response.accessToken
-                    tokenRepository.saveToken(accessToken)
-                    println("Access token: $accessToken")
+                    tokenRepository.saveToken(response.accessToken)
+                    onSuccessNavigate()
                 }
 
                 result.onFailure { e ->
@@ -89,6 +80,5 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
         }
     }
 
-
-
 }
+

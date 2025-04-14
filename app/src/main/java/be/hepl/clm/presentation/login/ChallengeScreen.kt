@@ -33,8 +33,6 @@ fun ChallengeScreen(
     loginViewModel: LoginViewModel
 ) {
 
-    var code by remember { mutableStateOf("") }
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -56,7 +54,12 @@ fun ChallengeScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { loginViewModel.onValidateButtonClick(method) },
+            onClick = { loginViewModel.onValidateButtonClick(method,
+                { navController.navigate("home") {
+                    popUpTo(navController.graph.startDestinationId) {
+                        inclusive = true
+                    }
+                }}) },
             enabled = loginViewModel.challenge.length == 6
         ) {
             Text("Valider")

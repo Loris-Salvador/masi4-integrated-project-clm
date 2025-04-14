@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import be.hepl.clm.domain.LoginMethod
+import be.hepl.clm.presentation.home.HomeScreen
 import be.hepl.clm.presentation.login.ChallengeScreen
 import be.hepl.clm.presentation.login.LoginChoiceScreen
 import be.hepl.clm.presentation.login.LoginScreen
@@ -33,6 +34,9 @@ fun AppNavHost(modifier: Modifier) {
             val methodString = backStackEntry.arguments?.getString("method") ?: "EMAIL"
             val method = LoginMethod.valueOf(methodString)
             ChallengeScreen(modifier, method, navController, loginViewModel)
+        }
+        composable(Destinations.HOME) {
+            HomeScreen()
         }
     }
 }

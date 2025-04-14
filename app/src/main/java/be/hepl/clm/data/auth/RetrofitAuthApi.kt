@@ -6,7 +6,10 @@ import retrofit2.http.POST
 
 interface RetrofitAuthApi {
     @POST("customer/login/email")
-    suspend fun login(@Body request: LoginRequest): Response<String>
+    suspend fun emailLogin(@Body request: LoginRequest): Response<String>
+
+    @POST("customer/login/phone")
+    suspend fun phoneLogin(@Body request: LoginRequest): Response<String>
 
     @POST("customer/login/email/challenge")
     suspend fun emailChallenge(@Body request: ChallengeRequest): Response<ChallengeResponse>
