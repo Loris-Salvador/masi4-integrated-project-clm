@@ -7,15 +7,17 @@ class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) :
     override suspend fun emailLogin(email: String, password: String): Result<String> {
         return try {
             val response = api.emailLogin(LoginRequest(email, password))
-            if (response.isSuccessful) {
+
+            if (response.isSuccessful && !response.body().isNullOrEmpty()) {
                 Result.success(response.body()!!)
             } else {
-                Result.failure(Exception("Erreur HTTP ${response.code()}"))
+                Result.failure(Exception(response.errorBody()!!.string()))
             }
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
+
 
     override suspend fun phoneLogin(email: String, password: String): Result<String> {
         return try {
@@ -23,7 +25,7 @@ class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) :
             if (response.isSuccessful) {
                 Result.success(response.body()!!)
             } else {
-                Result.failure(Exception("Erreur HTTP ${response.code()}"))
+                Result.failure(Exception(response.errorBody()!!.string()))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -40,7 +42,7 @@ class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) :
             if (response.isSuccessful) {
                 Result.success(response.body()!!)
             } else {
-                Result.failure(Exception("Erreur HTTP ${response.code()}"))
+                Result.failure(Exception(response.errorBody()!!.string()))
             }
         }
         catch (e: Exception) {
@@ -57,7 +59,7 @@ class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) :
             if (response.isSuccessful) {
                 Result.success(response.body()!!)
             } else {
-                Result.failure(Exception("Erreur HTTP ${response.code()}"))
+                Result.failure(Exception(response.errorBody()!!.string()))
             }
         }
         catch (e: Exception) {

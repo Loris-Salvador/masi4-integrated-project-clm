@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -52,6 +53,12 @@ fun ChallengeScreen(
         CodeInputField(loginViewModel)
 
         Spacer(modifier = Modifier.height(24.dp))
+
+        if(loginViewModel.isChallengeErrorMessageVisible)
+        {
+            ErrorChallengeMessage(loginViewModel)
+            Spacer(modifier = Modifier.height(20.dp))
+        }
 
         Button(
             onClick = { loginViewModel.onValidateButtonClick(method,
@@ -88,4 +95,10 @@ fun CodeInputField(loginViewModel: LoginViewModel) {
             .fillMaxWidth()
             .padding(horizontal = 24.dp),
     )
+}
+
+
+@Composable
+fun ErrorChallengeMessage(loginViewModel: LoginViewModel){
+    Text(loginViewModel.challengeErrorMessage, color = Color.Red, )
 }

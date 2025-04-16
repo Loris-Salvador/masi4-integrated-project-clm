@@ -43,8 +43,14 @@ fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavControlle
         ) {
             Button(
                 onClick = {
-                    loginViewModel.onSMSChoiceButtonClick()
-                    navController.navigate("challenge/SMS")
+                    loginViewModel.onSMSChoiceButtonClick(
+                        onSuccessNavigate = {
+                            navController.navigate("challenge/SMS")
+                        },
+                        onErrorNavigate = {
+                            navController.popBackStack()
+                        }
+                    )
                 },
                 modifier = Modifier
                     .width(140.dp)
@@ -56,9 +62,14 @@ fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavControlle
 
             Button(
                 onClick = {
-                    loginViewModel.onEmailChoiceButtonClick()
-                    navController.navigate("challenge/EMAIL")
-
+                    loginViewModel.onEmailChoiceButtonClick(
+                        onSuccessNavigate = {
+                            navController.navigate("challenge/EMAIL")
+                        },
+                        onErrorNavigate = {
+                            navController.popBackStack()
+                        }
+                    )
                 },
                 modifier = Modifier
                     .width(140.dp)

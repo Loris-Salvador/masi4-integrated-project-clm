@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.retrofit2.converter.scalars)
     implementation(libs.datastore.preferences)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)

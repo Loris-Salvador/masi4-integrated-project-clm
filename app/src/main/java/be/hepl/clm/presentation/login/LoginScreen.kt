@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -36,6 +37,7 @@ import be.hepl.clm.presentation.theme.loginButtonColors
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, loginViewModel: LoginViewModel) {
 
+
     Column(
         modifier = modifier
             .padding(horizontal = 58.dp)
@@ -44,7 +46,6 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, log
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-
         LoginTitleText()
 
         Spacer(modifier = Modifier.height(80.dp))
@@ -52,7 +53,18 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, log
         LoginEmailTextField(loginViewModel)
         LoginPasswordTextField(loginViewModel)
 
-        Spacer(modifier = Modifier.height(70.dp))
+
+        if(loginViewModel.isLoginErrorMessageVisible)
+        {
+            Spacer(modifier = Modifier.height(20.dp))
+
+            ErrorLoginMessage(loginViewModel)
+
+            Spacer(modifier = Modifier.height(20.dp))
+        }
+        else
+            Spacer(modifier = Modifier.height(70.dp))
+
 
         LoginButton(navController)
 
@@ -110,6 +122,11 @@ fun LoginPasswordTextField(loginViewModel: LoginViewModel) {
         singleLine = true,
         visualTransformation = PasswordVisualTransformation()
     )
+}
+
+@Composable
+fun ErrorLoginMessage(loginViewModel: LoginViewModel){
+    Text(loginViewModel.loginErrorMessage, color = Color.Red, )
 }
 
 

@@ -19,6 +19,12 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
 
     var challenge by mutableStateOf("")
 
+    var loginErrorMessage by mutableStateOf("")
+    var isLoginErrorMessageVisible by mutableStateOf(false)
+
+    var challengeErrorMessage by mutableStateOf("")
+    var isChallengeErrorMessageVisible by mutableStateOf(false)
+
     fun onEmailChanged(newEmail: String) {
         email = newEmail
     }
@@ -27,17 +33,35 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
         password = newPassword
     }
 
-    fun onSMSChoiceButtonClick() {
+    fun onSMSChoiceButtonClick(onErrorNavigate: () -> Unit, onSuccessNavigate: () -> Unit) {
         viewModelScope.launch {
             val result = authRepository.phoneLogin(email, password)
-            println(result)
+
+            result.onSuccess {
+                onSuccessNavigate()
+            }
+
+            result.onFailure {  e ->
+                loginErrorMessage = e.message.toString();
+                isLoginErrorMessageVisible = true
+                onErrorNavigate()
+            }
         }
     }
 
-    fun onEmailChoiceButtonClick() {
+    fun onEmailChoiceButtonClick(onErrorNavigate: () -> Unit, onSuccessNavigate: () -> Unit) {
         viewModelScope.launch {
-            val result =authRepository.emailLogin(email, password)
-            println(result)
+            val result = authRepository.emailLogin(email, password)
+
+            result.onSuccess {
+                onSuccessNavigate()
+            }
+
+            result.onFailure {  e ->
+                loginErrorMessage = e.message.toString();
+                isLoginErrorMessageVisible = true
+                onErrorNavigate()
+            }
         }
     }
 
@@ -59,7 +83,8 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
                 }
 
                 result.onFailure { e ->
-                    println("Erreur de login: ${e.message}")
+                    challengeErrorMessage = e.message.toString();
+                    isChallengeErrorMessageVisible = true
                 }
             }
         }
@@ -74,7 +99,8 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
                 }
 
                 result.onFailure { e ->
-                    println("Erreur de login: ${e.message}")
+                    challengeErrorMessage = e.message.toString();
+                    isChallengeErrorMessageVisible = true
                 }
             }
         }
