@@ -8,12 +8,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import be.hepl.clm.domain.LoginMethod
 import be.hepl.clm.presentation.home.HomeScreen
-import be.hepl.clm.presentation.login.ChallengeScreen
-import be.hepl.clm.presentation.login.LoginChoiceScreen
-import be.hepl.clm.presentation.login.LoginScreen
-import be.hepl.clm.presentation.login.LoginViewModel
+import be.hepl.clm.presentation.auth.login.ChallengeScreen
+import be.hepl.clm.presentation.auth.login.LoginChoiceScreen
+import be.hepl.clm.presentation.auth.login.LoginScreen
+import be.hepl.clm.presentation.auth.login.LoginViewModel
+import be.hepl.clm.presentation.auth.signup.SignupScreen
 import be.hepl.clm.presentation.navigation.Destinations.LOGIN
 import be.hepl.clm.presentation.navigation.Destinations.LOGIN_CHOICE
+import be.hepl.clm.presentation.navigation.Destinations.SIGNUP
 
 
 @Composable
@@ -23,7 +25,7 @@ fun AppNavHost(modifier: Modifier) {
     val loginViewModel: LoginViewModel = hiltViewModel()
 
 
-    NavHost(navController = navController, startDestination = LOGIN) {
+    NavHost(navController = navController, startDestination = SIGNUP) {
         composable(LOGIN) {
             LoginScreen(modifier, navController, loginViewModel)
         }
@@ -37,6 +39,9 @@ fun AppNavHost(modifier: Modifier) {
         }
         composable(Destinations.HOME) {
             HomeScreen()
+        }
+        composable(SIGNUP) {
+            SignupScreen()
         }
     }
 }

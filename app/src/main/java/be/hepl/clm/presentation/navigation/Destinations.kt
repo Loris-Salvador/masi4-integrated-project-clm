@@ -6,4 +6,5 @@ object Destinations {
     private const val CHALLENGE = "challenge"
     const val CHALLENGE_WITH_ARG = "$CHALLENGE/{method}"
     const val HOME = "home"
+    const val SIGNUP = "signup"
 }

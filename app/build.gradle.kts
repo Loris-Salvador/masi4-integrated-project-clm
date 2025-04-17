@@ -47,12 +47,15 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.material.icons.extended)
     implementation(libs.retrofit2.converter.scalars)
     implementation(libs.datastore.preferences)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.hilt.android.v2511)
     implementation(libs.androidx.hilt.navigation.compose.v110)
+    implementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.animation.core.lint)
     kapt(libs.hilt.android.compiler.v2511)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

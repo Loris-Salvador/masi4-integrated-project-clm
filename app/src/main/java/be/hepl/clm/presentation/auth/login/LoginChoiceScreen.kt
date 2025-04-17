@@ -1,4 +1,4 @@
-package be.hepl.clm.presentation.login
+package be.hepl.clm.presentation.auth.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

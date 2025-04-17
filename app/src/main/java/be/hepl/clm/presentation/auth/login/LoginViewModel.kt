@@ -1,4 +1,4 @@
-package be.hepl.clm.presentation.login
+package be.hepl.clm.presentation.auth.login
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

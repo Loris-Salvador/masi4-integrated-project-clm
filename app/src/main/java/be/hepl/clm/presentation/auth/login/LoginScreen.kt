@@ -1,4 +1,4 @@
-package be.hepl.clm.presentation.login
+package be.hepl.clm.presentation.auth.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -106,7 +106,6 @@ fun LoginEmailTextField(loginViewModel: LoginViewModel) {
         label = { Text("Email") },
         modifier = Modifier.fillMaxWidth(),
         singleLine = true,
-        visualTransformation = PasswordVisualTransformation()
     )
 }
 
