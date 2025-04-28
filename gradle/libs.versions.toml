@@ -1,6 +1,7 @@
 [versions]
 agp = "8.8.0"
 androidPinAuthentication = "v1.0.5"
+coil = "2.4.0"
 converterGson = "2.9.0"
 datastorePreferencesVersion = "1.0.0"
 hiltAndroid = "2.51.1"
@@ -18,13 +19,22 @@ activityCompose = "1.10.1"
 composeBom = "2024.04.01"
 navigationCompose = "2.8.9"
 animationCoreLint = "1.8.0-rc03"
+kotlinx-datetime = "0.5.0"
+volley = "1.2.1"
+coil-compose = "2.1.0"
+
 
 [libraries]
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
+
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 android-pin-authentication = { module = "com.github.Khokhlinvladimir:android-pin-authentication", version.ref = "androidPinAuthentication" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-hilt-navigation-compose-v110 = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationComposeVersion" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompilerVersion" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferencesVersion" }

@@ -37,7 +37,6 @@ import be.hepl.clm.presentation.theme.loginButtonColors
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, loginViewModel: LoginViewModel) {
 
-
     Column(
         modifier = modifier
             .padding(horizontal = 58.dp)
@@ -46,6 +45,8 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, log
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+
+
         LoginTitleText()
 
         Spacer(modifier = Modifier.height(80.dp))

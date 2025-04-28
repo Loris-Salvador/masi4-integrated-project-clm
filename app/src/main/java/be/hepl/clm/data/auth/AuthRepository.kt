@@ -8,4 +8,6 @@ interface AuthRepository {
     suspend fun emailChallenge(email: String, challenge: String): Result<ChallengeResponse>
 
     suspend fun phoneChallenge(email: String, challenge: String): Result<ChallengeResponse>
+
+    suspend fun signup()
 }

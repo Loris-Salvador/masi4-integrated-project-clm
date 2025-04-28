@@ -1,6 +1,7 @@
 package be.hepl.clm.data.auth
 
 import javax.inject.Inject
+import javax.inject.Named
 
 class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) : AuthRepository {
 
@@ -65,5 +66,9 @@ class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) :
         catch (e: Exception) {
             Result.failure(e)
         }
+    }
+
+    override suspend fun signup() {
+        TODO("Not yet implemented")
     }
 }

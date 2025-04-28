@@ -47,6 +47,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.coil.compose)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.retrofit2.converter.scalars)
     implementation(libs.datastore.preferences)
@@ -56,6 +58,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose.v110)
     implementation(libs.androidx.espresso.core)
     implementation(libs.androidx.animation.core.lint)
+    implementation(libs.volley)
     kapt(libs.hilt.android.compiler.v2511)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

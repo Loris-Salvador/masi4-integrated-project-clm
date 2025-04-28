@@ -9,6 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 object AuthModule {
 
     @Provides
-    fun provideAuthApi(retrofit: Retrofit): RetrofitAuthApi {
+    fun provideAuthApi(@Named("AuthAPI") retrofit: Retrofit): RetrofitAuthApi {
         return retrofit.create(RetrofitAuthApi::class.java)
     }
 
