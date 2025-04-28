@@ -7,11 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import be.hepl.clm.domain.LoginMethod
+import be.hepl.clm.presentation.MainScreenWithBottomNav
 import be.hepl.clm.presentation.auth.login.ChallengeScreen
 import be.hepl.clm.presentation.auth.login.LoginChoiceScreen
 import be.hepl.clm.presentation.auth.login.LoginScreen
 import be.hepl.clm.presentation.auth.login.LoginViewModel
 import be.hepl.clm.presentation.auth.signup.SignupScreen
+import be.hepl.clm.presentation.cart.CartScreen
+import be.hepl.clm.presentation.chat.ChatScreen
 import be.hepl.clm.presentation.home.HomeScreen
 import be.hepl.clm.presentation.home.HomeViewModel
 import be.hepl.clm.presentation.navigation.Destinations.LOGIN
@@ -22,11 +25,10 @@ import be.hepl.clm.presentation.navigation.Destinations.SIGNUP
 @Composable
 fun AppNavHost(modifier: Modifier) {
     val navController = rememberNavController()
-
     val loginViewModel: LoginViewModel = hiltViewModel()
 
-
     NavHost(navController = navController, startDestination = Destinations.HOME) {
+        // Login related screens - no bottom navigation
         composable(LOGIN) {
             LoginScreen(modifier, navController, loginViewModel)
         }
@@ -38,12 +40,26 @@ fun AppNavHost(modifier: Modifier) {
             val method = LoginMethod.valueOf(methodString)
             ChallengeScreen(modifier, method, navController, loginViewModel)
         }
-        composable(Destinations.HOME) {
-            val homeViewModel : HomeViewModel = hiltViewModel();
-            HomeScreen(homeViewModel)
-        }
         composable(SIGNUP) {
             SignupScreen()
+        }
+
+        // Screens with bottom navigation
+        composable(Destinations.HOME) {
+            val homeViewModel: HomeViewModel = hiltViewModel()
+            MainScreenWithBottomNav(navController = navController) {
+                HomeScreen(homeViewModel)
+            }
+        }
+        composable(Destinations.CART) {
+            MainScreenWithBottomNav(navController = navController) {
+                CartScreen()
+            }
+        }
+        composable(Destinations.CHAT) {
+            MainScreenWithBottomNav(navController = navController) {
+                ChatScreen()
+            }
         }
     }
 }

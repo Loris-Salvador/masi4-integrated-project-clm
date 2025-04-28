@@ -40,6 +40,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
             .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
+        Spacer(modifier = Modifier.height(30.dp))
+
         Text(
             text = "Nos produits",
             style = MaterialTheme.typography.headlineMedium,
@@ -177,6 +179,7 @@ fun ArticleCard(article: Article) {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
+
             // Image de l'article
             if (article.picture.isNotEmpty()) {
                 AsyncImage(
