@@ -11,6 +11,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -18,6 +22,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -62,7 +67,7 @@ fun BottomNavBar(navController: NavController) {
             NavigationBarItem(
                 icon = {
                     Icon(
-                        painter = androidx.compose.ui.res.painterResource(id = item.iconResId),
+                        imageVector = item.icon,
                         contentDescription = item.name
                     )
                 },
@@ -95,22 +100,23 @@ val bottomNavItems = listOf(
     BottomNavItem(
         name = "Accueil",
         route = Destinations.HOME,
-        iconResId = androidx.core.R.drawable.ic_call_answer
+        icon = Icons.Filled.Home
     ),
     BottomNavItem(
         name = "Panier",
         route = Destinations.CART,
-        iconResId = androidx.core.R.drawable.ic_call_answer_video
+        icon = Icons.Filled.ShoppingCart
     ),
     BottomNavItem(
         name = "Chat",
         route = Destinations.CHAT,
-        iconResId = androidx.core.R.drawable.ic_call_decline
+        icon = Icons.Filled.Chat
     )
 )
+
 
 data class BottomNavItem(
     val name: String,
     val route: String,
-    val iconResId: Int
+    val icon: ImageVector
 )

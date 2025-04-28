@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import be.hepl.clm.data.article.ArticleRepository
 import be.hepl.clm.domain.Article
+import be.hepl.clm.domain.CartManager
 import be.hepl.clm.domain.Category
 import be.hepl.clm.domain.CategoryTax
 import be.hepl.clm.domain.Picture
@@ -22,6 +23,13 @@ class HomeViewModel() : ViewModel() {
 
     private val _categories = MutableStateFlow<List<String>>(emptyList())
     val categories = _categories.asStateFlow()
+
+    // Pour la navigation vers les détails
+    private val _selectedArticle = MutableStateFlow<Article?>(null)
+    val selectedArticle = _selectedArticle.asStateFlow()
+
+    // CartManager instance
+    val cartManager = CartManager.getInstance()
 
     init {
         loadArticles()
@@ -59,6 +67,21 @@ class HomeViewModel() : ViewModel() {
         } else {
             emptyList()
         }
+    }
+
+    // Nouvelle fonction pour sélectionner un article et naviguer vers ses détails
+    fun selectArticle(article: Article) {
+        _selectedArticle.value = article
+    }
+
+    // Fonction pour effacer l'article sélectionné (après navigation)
+    fun clearSelectedArticle() {
+        _selectedArticle.value = null
+    }
+
+    // Fonction d'ajout rapide au panier depuis la HomeScreen
+    fun addToCart(article: Article, quantity: Int = 1) {
+        cartManager.addItem(article, quantity)
     }
 }
 
