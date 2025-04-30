@@ -31,7 +31,7 @@ object NetworkModule {
     @Named("ArticleAPI")
     fun provideRetrofitArticle(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://95.182.245.78:59006/api/")
+            .baseUrl("http://95.182.245.78:59006/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

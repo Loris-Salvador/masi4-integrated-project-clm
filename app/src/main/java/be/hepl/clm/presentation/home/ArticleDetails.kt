@@ -51,9 +51,9 @@ fun ArticleDetailScreen(
                 .verticalScroll(scrollState)
         ) {
             // Image principale
-            if (article.picture.isNotEmpty()) {
+            if (article.pictures.isNotEmpty()) {
                 AsyncImage(
-                    model = article.picture.first().path,
+                    model = article.pictures.first().path,
                     contentDescription = article.name,
                     modifier = Modifier
                         .fillMaxWidth()

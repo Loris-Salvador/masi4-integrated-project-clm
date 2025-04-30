@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import be.hepl.clm.domain.CartItem
 import be.hepl.clm.domain.CartManager
 import coil.compose.AsyncImage
@@ -28,7 +29,7 @@ import coil.compose.AsyncImage
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartScreen(
-
+    navController: NavController,
 ) {
     val cartManager = CartManager.getInstance()
     val items by cartManager.items.collectAsState()
@@ -69,9 +70,6 @@ fun CartScreen(
                             color = Color.Gray
                         )
                         Spacer(modifier = Modifier.height(24.dp))
-                        Button(onClick = {}) {
-                            Text("Continuer mes achats")
-                        }
                     }
                 }
             } else {
@@ -125,10 +123,10 @@ fun CartScreen(
                         }
 
                         Button(
-                            onClick = {  },
-                            modifier = Modifier.fillMaxWidth()
+                            onClick = { navController.navigate("payment") },
+                            modifier = Modifier.fillMaxWidth(),
                         ) {
-                            Text("Valider ma commande")
+                            Text("Valider mon panier")
                         }
 
                         TextButton(
@@ -173,9 +171,9 @@ fun CartItemCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Image de l'article
-            if (article.picture.isNotEmpty()) {
+            if (article.pictures.isNotEmpty()) {
                 AsyncImage(
-                    model = article.picture.first().path,
+                    model = article.pictures.first().path,
                     contentDescription = article.name,
                     modifier = Modifier
                         .size(80.dp)

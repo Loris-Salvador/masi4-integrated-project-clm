@@ -10,7 +10,6 @@ data class Article(
     val pictures: List<Picture>,
     val categoryTax: CategoryTax,
     val stock: Stock,
-    val picture: List<Picture>
 )
 
 data class Category(

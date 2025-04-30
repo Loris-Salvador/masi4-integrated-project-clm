@@ -1,17 +1,15 @@
 package be.hepl.clm.presentation.home
 
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,20 +17,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import be.hepl.clm.domain.Article
+import be.hepl.clm.domain.Category
 import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: HomeViewModel) {
     val uiState by viewModel.uiState.collectAsState()
-    val selectedCategory by viewModel.selectedCategory.collectAsState()
+    val selectedCategoryName by viewModel.selectedCategoryName.collectAsState()
     val categories by viewModel.categories.collectAsState()
     val selectedArticle by viewModel.selectedArticle.collectAsState()
     val cartItems by viewModel.cartManager.items.collectAsState()
@@ -65,7 +62,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
             // Filtres par catégorie
             CategoryFilter(
                 categories = categories,
-                selectedCategory = selectedCategory,
+                selectedCategoryName = selectedCategoryName,
                 onCategorySelected = { viewModel.selectCategory(it) }
             )
 
@@ -83,7 +80,22 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 }
                 is ArticleUiState.Success -> {
                     val filteredArticles = viewModel.getFilteredArticles()
-                    if (filteredArticles.isEmpty()) {
+
+                    Log.d("jsp", viewModel.getCategoryNames().toString())
+
+                    if (selectedCategoryName == null) {
+                        // Message à afficher quand aucune catégorie n'est sélectionnée
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Choisissez une catégorie",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    } else if (filteredArticles.isEmpty()) {
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
@@ -91,6 +103,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
                             Text("Aucun article trouvé dans cette catégorie")
                         }
                     } else {
+                        Log.d("jsp", "articles list")
+
                         ArticleList(
                             articles = filteredArticles,
                             onArticleClick = { viewModel.selectArticle(it) },
@@ -131,9 +145,9 @@ fun HomeScreen(viewModel: HomeViewModel) {
 
 @Composable
 fun CategoryFilter(
-    categories: List<String>,
-    selectedCategory: String?,
-    onCategorySelected: (String?) -> Unit
+    categories: List<Category>,
+    selectedCategoryName: String?,
+    onCategorySelected: (Category?) -> Unit
 ) {
     Column {
         Text(
@@ -146,25 +160,13 @@ fun CategoryFilter(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            // Option "Tous"
-            item {
-                FilterChip(
-                    selected = selectedCategory == null,
-                    onClick = { onCategorySelected(null) },
-                    label = { Text("Tous") },
-                    colors = FilterChipDefaults.filterChipColors(
-                        selectedContainerColor = MaterialTheme.colorScheme.primary,
-                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary
-                    )
-                )
-            }
 
             // Catégories
             items(categories) { category ->
                 FilterChip(
-                    selected = selectedCategory == category,
+                    selected = selectedCategoryName == category.category,
                     onClick = { onCategorySelected(category) },
-                    label = { Text(category) },
+                    label = { Text(category.category) },
                     colors = FilterChipDefaults.filterChipColors(
                         selectedContainerColor = MaterialTheme.colorScheme.primary,
                         selectedLabelColor = MaterialTheme.colorScheme.onPrimary
@@ -212,9 +214,9 @@ fun ArticleCard(
 
             // Image de l'article avec bouton d'ajout au panier
             Box(modifier = Modifier.fillMaxWidth()) {
-                if (article.picture.isNotEmpty()) {
+                if (article.pictures.isNotEmpty()) {
                     AsyncImage(
-                        model = article.picture.first().path,
+                        model = article.pictures.first().path,
                         contentDescription = article.name,
                         modifier = Modifier
                             .fillMaxWidth()

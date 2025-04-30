@@ -20,6 +20,7 @@ import be.hepl.clm.presentation.home.HomeViewModel
 import be.hepl.clm.presentation.navigation.Destinations.LOGIN
 import be.hepl.clm.presentation.navigation.Destinations.LOGIN_CHOICE
 import be.hepl.clm.presentation.navigation.Destinations.SIGNUP
+import be.hepl.clm.presentation.payment.PaymentScreen
 
 
 @Composable
@@ -53,13 +54,16 @@ fun AppNavHost(modifier: Modifier) {
         }
         composable(Destinations.CART) {
             MainScreenWithBottomNav(navController = navController) {
-                CartScreen()
+                CartScreen(navController = navController)
             }
         }
         composable(Destinations.CHAT) {
             MainScreenWithBottomNav(navController = navController) {
                 ChatScreen()
             }
+        }
+        composable("payment") {
+            PaymentScreen(navController)
         }
     }
 }
