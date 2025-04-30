@@ -1,5 +1,6 @@
 package be.hepl.clm.data.purchase
 
+import android.util.Log
 import be.hepl.clm.data.token.TokenRepository
 import be.hepl.clm.domain.PurchaseRequest
 import kotlinx.coroutines.Dispatchers
@@ -12,6 +13,7 @@ class PurchaseService @Inject constructor(
 ) {
     suspend fun validateCart(purchaseRequest: PurchaseRequest): Any {
         return withContext(Dispatchers.IO) {
+            Log.d("voire", purchaseRequest.toString())
             try {
                 // Make sure we're using the latest token
                 val token = tokenRepository.getToken() ?: ""
