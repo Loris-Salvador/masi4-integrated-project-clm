@@ -1,5 +1,6 @@
 package be.hepl.clm.data.auth
 
+import be.hepl.clm.domain.CustomerSignupDTO
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -16,4 +17,7 @@ interface RetrofitAuthApi {
 
     @POST("customer/login/phone/challenge")
     suspend fun phoneChallenge(@Body request: ChallengeRequest): Response<ChallengeResponse>
+
+    @POST("customer/signup")
+    suspend fun signup(@Body signupRequest: CustomerSignupDTO): Response<String>
 }

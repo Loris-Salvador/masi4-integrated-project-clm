@@ -35,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import be.hepl.clm.domain.Gender
 import be.hepl.clm.presentation.auth.login.LoginViewModel
+import be.hepl.clm.presentation.navigation.Destinations
 import be.hepl.clm.presentation.theme.loginButtonColors
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -43,7 +44,7 @@ import java.util.Locale
 
 
 @Composable
-fun SignupScreen() {
+fun SignupScreen(navController: NavController) {
 
 
     val signupViewModel: SignupViewModel = hiltViewModel()
@@ -71,7 +72,7 @@ fun SignupScreen() {
         Spacer(modifier = Modifier.height(5.dp))
         DatePickerDocked()
         Spacer(modifier = Modifier.height(80.dp))
-        SignupButton()
+        SignupButton(onClick =  { signupViewModel.signup({ navController.navigate(Destinations.LOGIN) }) }, navController = navController)
     }
 }
 
@@ -344,18 +345,29 @@ fun convertMillisToDate(millis: Long): String {
 }
 
 @Composable
-fun SignupButton() {
+fun SignupButton(
+    onClick: () -> Unit,
+    isLoading: Boolean = false,
+    navController: NavController
+) {
     Button(
-        onClick = {
-        },
+        onClick = onClick,
         modifier = Modifier
             .width(210.dp)
             .height(50.dp),
-        colors = loginButtonColors()
+        colors = loginButtonColors(),
+        enabled = !isLoading
     ) {
-        Text(
-            text = "Signup",
-            fontSize = 18.sp
-        )
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(24.dp),
+                color = Color.White
+            )
+        } else {
+            Text(
+                text = "Signup",
+                fontSize = 18.sp
+            )
+        }
     }
 }

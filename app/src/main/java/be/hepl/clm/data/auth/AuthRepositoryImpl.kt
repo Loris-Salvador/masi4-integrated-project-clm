@@ -1,5 +1,6 @@
 package be.hepl.clm.data.auth
 
+import be.hepl.clm.domain.CustomerSignupDTO
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -45,8 +46,7 @@ class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) :
             } else {
                 Result.failure(Exception(response.errorBody()!!.string()))
             }
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Result.failure(e)
         }
     }
@@ -62,13 +62,24 @@ class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) :
             } else {
                 Result.failure(Exception(response.errorBody()!!.string()))
             }
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-    override suspend fun signup() {
-        TODO("Not yet implemented")
+    override suspend fun signup(customerSignupDTO: CustomerSignupDTO): Result<String> {
+        return try {
+
+            val response = api.signup(customerSignupDTO)
+
+            if (response.isSuccessful && !response.body().isNullOrEmpty()) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception(response.errorBody()?.string() ?: "Unknown error"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+
     }
 }

@@ -1,5 +1,7 @@
 package be.hepl.clm.data.auth
 
+import be.hepl.clm.domain.CustomerSignupDTO
+
 interface AuthRepository {
     suspend fun emailLogin(email: String, password: String): Result<String>
 
@@ -9,5 +11,5 @@ interface AuthRepository {
 
     suspend fun phoneChallenge(email: String, challenge: String): Result<ChallengeResponse>
 
-    suspend fun signup()
+    suspend fun signup(customerSignupDTO: CustomerSignupDTO): Result<String>
 }

@@ -28,7 +28,7 @@ fun AppNavHost(modifier: Modifier) {
     val navController = rememberNavController()
     val loginViewModel: LoginViewModel = hiltViewModel()
 
-    NavHost(navController = navController, startDestination = Destinations.LOGIN) {
+    NavHost(navController = navController, startDestination = Destinations.SIGNUP) {
         // Login related screens - no bottom navigation
         composable(LOGIN) {
             LoginScreen(modifier, navController, loginViewModel)
@@ -42,7 +42,7 @@ fun AppNavHost(modifier: Modifier) {
             ChallengeScreen(modifier, method, navController, loginViewModel)
         }
         composable(SIGNUP) {
-            SignupScreen()
+            SignupScreen(navController)
         }
 
         // Screens with bottom navigation
