@@ -1,5 +1,6 @@
 package be.hepl.clm.di
 
+import be.hepl.clm.data.bank.BankApiService
 import be.hepl.clm.data.purchase.PurchaseApiService
 import be.hepl.clm.data.purchase.PurchaseRepository
 import be.hepl.clm.data.purchase.PurchaseRepositoryImpl
@@ -27,6 +28,12 @@ abstract class PurchaseModule {
         @Singleton
         fun providePurchaseApiService(@Named("ArticleAPI") retrofit: Retrofit): PurchaseApiService {
             return retrofit.create(PurchaseApiService::class.java)
+        }
+
+        @Provides
+        @Singleton
+        fun provideBankApiService(@Named("ArticleAPI") retrofit: Retrofit): BankApiService {
+            return retrofit.create(BankApiService::class.java)
         }
     }
 }

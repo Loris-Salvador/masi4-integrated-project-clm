@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import be.hepl.clm.data.purchase.PurchaseRepository
 import be.hepl.clm.domain.BillingInfo
-import be.hepl.clm.domain.CartItem
 import be.hepl.clm.domain.CartManager
+import be.hepl.clm.domain.PaymentInfo
 import be.hepl.clm.domain.ProductItem
 import be.hepl.clm.domain.PurchaseRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,11 +19,15 @@ data class PaymentUiState(
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
     val error: String? = null,
+    // Adresse de livraison
     val street: String = "",
     val number: String = "",
     val postalCode: String = "",
     val city: String = "",
-    val bank: String = ""
+    // Informations bancaires
+    val cardNumber: String = "",
+    val customerBank: String = "",
+    val communication: String = ""
 )
 
 @HiltViewModel
@@ -36,6 +40,7 @@ class PaymentViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(PaymentUiState())
     val uiState: StateFlow<PaymentUiState> = _uiState.asStateFlow()
 
+    // Adresse de livraison
     fun updateStreet(street: String) {
         _uiState.value = _uiState.value.copy(street = street)
     }
@@ -52,8 +57,17 @@ class PaymentViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(city = city)
     }
 
-    fun updateBank(bank: String) {
-        _uiState.value = _uiState.value.copy(bank = bank)
+    // Informations bancaires
+    fun updateCardNumber(cardNumber: String) {
+        _uiState.value = _uiState.value.copy(cardNumber = cardNumber)
+    }
+
+    fun updateCustomerBank(customerBank: String) {
+        _uiState.value = _uiState.value.copy(customerBank = customerBank)
+    }
+
+    fun updateCommunication(communication: String) {
+        _uiState.value = _uiState.value.copy(communication = communication)
     }
 
     fun validateCart() {
@@ -63,12 +77,34 @@ class PaymentViewModel @Inject constructor(
             try {
                 val currentState = _uiState.value
 
+                // Vérifier que les champs obligatoires sont remplis
+                if (currentState.cardNumber.isBlank() ||
+                    currentState.customerBank.isBlank() ||
+                    currentState.street.isBlank() ||
+                    currentState.number.isBlank() ||
+                    currentState.postalCode.isBlank() ||
+                    currentState.city.isBlank()
+                ) {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = "Veuillez remplir tous les champs obligatoires"
+                    )
+                    return@launch
+                }
+
                 // Create billing info
                 val billingInfo = BillingInfo(
                     billingAddressStreet = currentState.street,
                     billingAddressNum = currentState.number,
                     billingAddressPc = currentState.postalCode,
                     billingAddressCity = currentState.city,
+                )
+
+                // Create payment info
+                val paymentInfo = PaymentInfo(
+                    cardNumber = currentState.cardNumber,
+                    customerBank = currentState.customerBank,
+                    communication = currentState.communication
                 )
 
                 // Map cart items to product items
@@ -80,6 +116,7 @@ class PaymentViewModel @Inject constructor(
                 val purchaseRequest = PurchaseRequest(
                     products = productItems,
                     billingInfo = billingInfo,
+                    paymentInfo = paymentInfo,
                     token = ""
                 )
 

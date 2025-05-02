@@ -11,9 +11,3 @@ data class ProductItem(
     val id: Int,
     val quantity: Int
 )
-
-data class PurchaseRequest(
-    val products: List<ProductItem>,
-    val billingInfo: BillingInfo,
-    var token: String
-)

@@ -71,6 +71,15 @@ fun PaymentScreen(
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
+            // Adresse de livraison
+            Text(
+                text = "Adresse de livraison",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 8.dp)
+            )
+
             OutlinedTextField(
                 value = uiState.street,
                 onValueChange = { viewModel.updateStreet(it) },
@@ -105,7 +114,41 @@ fun PaymentScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Informations bancaires
+            Text(
+                text = "Informations bancaires",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 8.dp)
+            )
+
+            OutlinedTextField(
+                value = uiState.cardNumber,
+                onValueChange = { viewModel.updateCardNumber(it) },
+                label = { Text("Numéro de carte (IBAN)") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
             Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = uiState.customerBank,
+                onValueChange = { viewModel.updateCustomerBank(it) },
+                label = { Text("Nom de la banque") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = uiState.communication,
+                onValueChange = { viewModel.updateCommunication(it) },
+                label = { Text("Communication") },
+                modifier = Modifier.fillMaxWidth()
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
 

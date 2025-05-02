@@ -48,6 +48,7 @@ android {
 
 dependencies {
     implementation(libs.coil.compose)
+    implementation(libs.java.websocket)
     implementation(libs.kotlinx.datetime)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.retrofit2.converter.scalars)

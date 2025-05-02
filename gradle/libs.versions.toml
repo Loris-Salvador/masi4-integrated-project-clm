@@ -9,6 +9,7 @@ hiltAndroidCompiler = "2.51.1"
 hiltAndroidCompilerVersion = "2.48"
 hiltNavigationCompose = "1.2.0"
 hiltNavigationComposeVersion = "1.1.0"
+javaWebsocket = "1.5.3"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -27,6 +28,7 @@ coil-compose = "2.1.0"
 [libraries]
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
 
+java-websocket = { module = "org.java-websocket:Java-WebSocket", version.ref = "javaWebsocket" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 android-pin-authentication = { module = "com.github.Khokhlinvladimir:android-pin-authentication", version.ref = "androidPinAuthentication" }
