@@ -76,7 +76,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, log
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        MasiIdLoginButton()
+        MasiIdLoginButton(navController)
 
         Spacer(modifier = Modifier.height(50.dp))
 
@@ -150,8 +150,8 @@ fun LoginButton(navController: NavController) {
 }
 
 @Composable
-fun MasiIdLoginButton() {
-    Button(onClick = {}, modifier = Modifier
+fun MasiIdLoginButton(navController: NavController) {
+    Button(onClick = {navController.navigate(Destinations.MASI_ID)}, modifier = Modifier
         .width(190.dp)
         .height(60.dp),
         colors = loginButtonColors())
@@ -164,7 +164,7 @@ fun MasiIdLoginButton() {
             Image(
                 painter = painterResource(id = R.drawable.masimart),
                 contentDescription = "Logo MASI",
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(50.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(text = "MASI ID", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())

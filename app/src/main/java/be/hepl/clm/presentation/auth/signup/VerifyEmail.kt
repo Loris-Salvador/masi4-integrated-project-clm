@@ -19,10 +19,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import be.hepl.clm.domain.LoginMethod
-import be.hepl.clm.presentation.auth.login.LoginViewModel
 import be.hepl.clm.presentation.navigation.Destinations
 
 @Composable
@@ -38,6 +36,11 @@ fun VerifyEmail(
             .padding(top = 100.dp, end = 50.dp, start = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text("Vérification de l'email", textAlign = TextAlign.Center, fontSize = 30.sp, lineHeight = 40.sp)
+
+        Spacer(modifier = Modifier.height(25.dp))
+
+
         Text("Vous avez reçu un email avec un code", textAlign = TextAlign.Center, fontSize = 24.sp, lineHeight = 40.sp)
 
 

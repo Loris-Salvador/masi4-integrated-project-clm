@@ -14,6 +14,8 @@ import be.hepl.clm.presentation.auth.login.ChallengeScreen
 import be.hepl.clm.presentation.auth.login.LoginChoiceScreen
 import be.hepl.clm.presentation.auth.login.LoginScreen
 import be.hepl.clm.presentation.auth.login.LoginViewModel
+import be.hepl.clm.presentation.auth.login.MasiIdLoginScreen
+import be.hepl.clm.presentation.auth.login.MasiIdViewModel
 import be.hepl.clm.presentation.auth.signup.SignupScreen
 import be.hepl.clm.presentation.auth.signup.SignupViewModel
 import be.hepl.clm.presentation.auth.signup.VerifyEmail
@@ -53,8 +55,6 @@ fun AppNavHost(modifier: Modifier) {
         composable(Destinations.VERIFY_EMAIL) {
             VerifyEmail(navController = navController, signupViewModel = signupViewModel)
         }
-
-        // Screens with bottom navigation
         composable(Destinations.HOME) {
             val homeViewModel: HomeViewModel = hiltViewModel()
             MainScreenWithBottomNav(navController = navController) {
@@ -73,6 +73,10 @@ fun AppNavHost(modifier: Modifier) {
         }
         composable("payment") {
             PaymentScreen(navController)
+        }
+        composable(Destinations.MASI_ID) {
+            val masiIdViewModel: MasiIdViewModel = hiltViewModel()
+            MasiIdLoginScreen(modifier, navController, masiIdViewModel)
         }
     }
 }
