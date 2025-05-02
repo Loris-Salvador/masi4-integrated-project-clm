@@ -10,4 +10,5 @@ object Destinations {
 
     const val CART = "cart"
     const val CHAT = "chat"
+    const val VERIFY_EMAIL = "verify-email"
 }

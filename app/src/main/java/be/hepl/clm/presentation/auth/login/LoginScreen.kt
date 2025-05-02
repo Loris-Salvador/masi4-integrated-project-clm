@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import be.hepl.clm.R
+import be.hepl.clm.presentation.navigation.Destinations
 import be.hepl.clm.presentation.theme.Blue
 import be.hepl.clm.presentation.theme.loginButtonColors
 
@@ -191,7 +192,7 @@ fun LoginClickableText(text: String, navController: NavController) {
         modifier = Modifier.pointerInput(Unit) {
             detectTapGestures(
                 onTap = {
-                    //navController.navigate("")
+                    navController.navigate(Destinations.SIGNUP)
                 }
             )
         },

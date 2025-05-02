@@ -44,10 +44,7 @@ import java.util.Locale
 
 
 @Composable
-fun SignupScreen(navController: NavController) {
-
-
-    val signupViewModel: SignupViewModel = hiltViewModel()
+fun SignupScreen(signupViewModel: SignupViewModel ,navController: NavController) {
 
     Column(
         modifier = Modifier
@@ -72,7 +69,7 @@ fun SignupScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(5.dp))
         DatePickerDocked()
         Spacer(modifier = Modifier.height(80.dp))
-        SignupButton(onClick =  { signupViewModel.signup({ navController.navigate(Destinations.LOGIN) }) }, navController = navController)
+        SignupButton(onClick =  { signupViewModel.signup({ navController.navigate(Destinations.VERIFY_EMAIL) }) }, navController = navController)
     }
 }
 

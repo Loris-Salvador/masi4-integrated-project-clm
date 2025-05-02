@@ -1,11 +1,16 @@
 package be.hepl.clm.presentation.auth.signup
 
+import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import be.hepl.clm.data.auth.AuthRepository
 import be.hepl.clm.domain.CustomerSignupDTO
 import be.hepl.clm.domain.Gender
+import be.hepl.clm.domain.LoginMethod
+import be.hepl.clm.domain.VerifyRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
@@ -27,7 +32,6 @@ class SignupViewModel @Inject constructor(
 
     var isPasswordVisible = mutableStateOf(false)
 
-    // État pour gérer le processus d'inscription
     var isLoading = mutableStateOf(false)
     var errorMessage = mutableStateOf<String?>(null)
     var signupSuccess = mutableStateOf(false)
@@ -76,7 +80,6 @@ class SignupViewModel @Inject constructor(
         )
     }
 
-    // Nouvelle méthode pour gérer l'inscription
     fun signup(onSuccessNavigate: () -> Unit) = viewModelScope.launch {
         try {
             isLoading.value = true
@@ -89,6 +92,7 @@ class SignupViewModel @Inject constructor(
             result.fold(
                 onSuccess = {
                     signupSuccess.value = true
+                    authRepository.verifyEmail(VerifyRequest(email = email.value))
                     onSuccessNavigate()
                 },
                 onFailure = { exception ->
@@ -99,6 +103,32 @@ class SignupViewModel @Inject constructor(
             errorMessage.value = e.message ?: "An unexpected error occurred"
         } finally {
             isLoading.value = false
+        }
+    }
+
+
+    var challenge by mutableStateOf("")
+
+    var challengeErrorMessage by mutableStateOf("")
+    var isChallengeErrorMessageVisible by mutableStateOf(false)
+
+
+    fun onChallengeChanged(newChallenge: String) {
+        challenge = newChallenge
+    }
+
+
+    fun onValidateButtonClick(loginMethod: LoginMethod, onSuccessNavigate: () -> Unit) {
+
+        if(loginMethod == LoginMethod.EMAIL)
+        {
+            viewModelScope.launch {
+                val result = authRepository.verifyEmailChallenge(email.value, challenge)
+
+                result.onSuccess {
+                    onSuccessNavigate()
+                }
+            }
         }
     }
 }

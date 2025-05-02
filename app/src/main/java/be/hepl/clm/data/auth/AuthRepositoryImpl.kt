@@ -1,6 +1,7 @@
 package be.hepl.clm.data.auth
 
 import be.hepl.clm.domain.CustomerSignupDTO
+import be.hepl.clm.domain.VerifyRequest
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -81,5 +82,31 @@ class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) :
             Result.failure(e)
         }
 
+    }
+
+    override suspend fun verifyEmail(verifyRequest: VerifyRequest): Result<String> {
+        return try {
+            val response = api.verifyEmail(verifyRequest)
+            if (response.isSuccessful) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception(response.errorBody()!!.string()))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun verifyEmailChallenge(email: String, challenge: String): Result<String> {
+        return try {
+            val response = api.verifyEmailChallenge(ChallengeRequest(email, challenge))
+            if (response.isSuccessful) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception(response.errorBody()!!.string()))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }
