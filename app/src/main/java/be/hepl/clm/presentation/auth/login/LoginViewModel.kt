@@ -1,5 +1,6 @@
 package be.hepl.clm.presentation.auth.login
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -94,6 +95,7 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
                 val result = authRepository.phoneChallenge(email, challenge)
 
                 result.onSuccess { response ->
+                    Log.d("token", response.accessToken.toString())
                     tokenRepository.saveToken(response.accessToken)
                     onSuccessNavigate()
                 }

@@ -107,13 +107,6 @@ fun PaymentScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            OutlinedTextField(
-                value = uiState.bank,
-                onValueChange = { viewModel.updateBank(it) },
-                label = { Text("Banque") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(

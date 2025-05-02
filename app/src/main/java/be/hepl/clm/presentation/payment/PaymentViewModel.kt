@@ -69,7 +69,6 @@ class PaymentViewModel @Inject constructor(
                     billingAddressNum = currentState.number,
                     billingAddressPc = currentState.postalCode,
                     billingAddressCity = currentState.city,
-                    customerBank = currentState.bank
                 )
 
                 // Map cart items to product items

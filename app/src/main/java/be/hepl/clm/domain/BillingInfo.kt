@@ -5,7 +5,6 @@ data class BillingInfo(
     val billingAddressNum: String,
     val billingAddressPc: String,
     val billingAddressCity: String,
-    val customerBank: String
 )
 
 data class ProductItem(
