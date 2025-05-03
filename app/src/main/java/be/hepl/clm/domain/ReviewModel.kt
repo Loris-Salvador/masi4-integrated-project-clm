@@ -9,7 +9,6 @@ data class Review(
     val date: String
 )
 
-// Modèle pour l'envoi d'un nouveau commentaire
 data class ReviewRequest(
     val productId: Int,
     val username: String,

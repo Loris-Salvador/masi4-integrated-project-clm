@@ -1,6 +1,6 @@
 package be.hepl.clm.data.auth
 
-import be.hepl.clm.domain.CustomerSignupDTO
+import be.hepl.clm.domain.CustomerSignup
 import be.hepl.clm.domain.VerifyRequest
 
 interface AuthRepository {
@@ -12,7 +12,7 @@ interface AuthRepository {
 
     suspend fun phoneChallenge(email: String, challenge: String): Result<ChallengeResponse>
 
-    suspend fun signup(customerSignupDTO: CustomerSignupDTO): Result<String>
+    suspend fun signup(customerSignup: CustomerSignup): Result<String>
 
     suspend fun verifyEmail(verifyRequest: VerifyRequest): Result<String>
 

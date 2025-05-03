@@ -19,12 +19,10 @@ data class PaymentUiState(
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
     val error: String? = null,
-    // Adresse de livraison
     val street: String = "",
     val number: String = "",
     val postalCode: String = "",
     val city: String = "",
-    // Informations bancaires
     val cardNumber: String = "",
     val customerBank: String = "",
     val communication: String = ""
@@ -40,7 +38,6 @@ class PaymentViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(PaymentUiState())
     val uiState: StateFlow<PaymentUiState> = _uiState.asStateFlow()
 
-    // Adresse de livraison
     fun updateStreet(street: String) {
         _uiState.value = _uiState.value.copy(street = street)
     }
@@ -77,7 +74,6 @@ class PaymentViewModel @Inject constructor(
             try {
                 val currentState = _uiState.value
 
-                // Vérifier que les champs obligatoires sont remplis
                 if (currentState.cardNumber.isBlank() ||
                     currentState.customerBank.isBlank() ||
                     currentState.street.isBlank() ||
@@ -92,7 +88,6 @@ class PaymentViewModel @Inject constructor(
                     return@launch
                 }
 
-                // Create billing info
                 val billingInfo = BillingInfo(
                     billingAddressStreet = currentState.street,
                     billingAddressNum = currentState.number,
@@ -100,19 +95,16 @@ class PaymentViewModel @Inject constructor(
                     billingAddressCity = currentState.city,
                 )
 
-                // Create payment info
                 val paymentInfo = PaymentInfo(
                     cardNumber = currentState.cardNumber,
                     customerBank = currentState.customerBank,
                     communication = currentState.communication
                 )
 
-                // Map cart items to product items
                 val productItems = cartManager.items.value.map {
                     ProductItem(id = it.article.id, quantity = it.quantity)
                 }
 
-                // Create purchase request (token will be added by the repository)
                 val purchaseRequest = PurchaseRequest(
                     products = productItems,
                     billingInfo = billingInfo,
@@ -127,7 +119,6 @@ class PaymentViewModel @Inject constructor(
                         isLoading = false,
                         isSuccess = true
                     )
-                    // Optionally clear cart after successful purchase
                     cartManager.clearCart()
                 } else {
                     _uiState.value = _uiState.value.copy(

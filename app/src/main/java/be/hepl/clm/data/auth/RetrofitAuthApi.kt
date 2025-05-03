@@ -1,6 +1,6 @@
 package be.hepl.clm.data.auth
 
-import be.hepl.clm.domain.CustomerSignupDTO
+import be.hepl.clm.domain.CustomerSignup
 import be.hepl.clm.domain.VerifyRequest
 import retrofit2.Response
 import retrofit2.http.Body
@@ -20,7 +20,7 @@ interface RetrofitAuthApi {
     suspend fun phoneChallenge(@Body request: ChallengeRequest): Response<ChallengeResponse>
 
     @POST("customer/signup")
-    suspend fun signup(@Body signupRequest: CustomerSignupDTO): Response<String>
+    suspend fun signup(@Body signupRequest: CustomerSignup): Response<String>
 
     @POST("customer/verify/email")
     suspend fun verifyEmail(@Body verifyRequest: VerifyRequest): Response<String>

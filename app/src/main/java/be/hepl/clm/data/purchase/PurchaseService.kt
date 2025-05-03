@@ -15,7 +15,6 @@ class PurchaseService @Inject constructor(
         return withContext(Dispatchers.IO) {
             Log.d("voire", purchaseRequest.toString())
             try {
-                // Make sure we're using the latest token
                 val token = tokenRepository.getToken() ?: ""
                 val requestWithToken = purchaseRequest.copy(token = token)
                 purchaseApiService.validateCart(requestWithToken)

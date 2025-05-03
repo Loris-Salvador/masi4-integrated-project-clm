@@ -16,7 +16,6 @@ class PurchaseRepositoryImpl @Inject constructor(
     override suspend fun validateCart(purchaseRequest: PurchaseRequest): Boolean {
         return withContext(Dispatchers.IO) {
             try {
-                // 2. Si le paiement est réussi, valider le panier
                 purchaseRequest.token = tokenRepository.getToken() ?: ""
 
 
@@ -27,7 +26,6 @@ class PurchaseRepositoryImpl @Inject constructor(
                     false
                 }
 
-                // 1. Traiter le paiement via le service bancaire
                 val paymentResult = bankService.processPayment(purchaseRequest.paymentInfo)
 
                 if (paymentResult.isFailure) {

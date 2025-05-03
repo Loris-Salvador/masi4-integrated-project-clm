@@ -18,15 +18,12 @@ class ReviewViewModel @Inject constructor(
     private val reviewRepository: ReviewRepository,
 )    : ViewModel() {
 
-    // États pour les commentaires
     private val _reviewsState = MutableStateFlow<ReviewsState>(ReviewsState.Loading)
     val reviewsState: StateFlow<ReviewsState> = _reviewsState.asStateFlow()
 
-    // États pour l'envoi d'un commentaire
     private val _postReviewState = MutableStateFlow<PostReviewState>(PostReviewState.Idle)
     val postReviewState: StateFlow<PostReviewState> = _postReviewState.asStateFlow()
 
-    // Stockage temporaire pour le commentaire en cours d'édition
     private val _userRating = MutableStateFlow(0)
     val userRating: StateFlow<Int> = _userRating.asStateFlow()
 
@@ -36,8 +33,6 @@ class ReviewViewModel @Inject constructor(
     private val _username = MutableStateFlow("")
     val username: StateFlow<String> = _username.asStateFlow()
 
-    // Initialisation du repository
-    // Fonction pour charger les commentaires d'un article
     fun loadReviews(productId: Int) {
         _reviewsState.value = ReviewsState.Loading
 
@@ -54,9 +49,7 @@ class ReviewViewModel @Inject constructor(
         }
     }
 
-    // Fonction pour poster un nouveau commentaire
     fun postReview(productId: Int) {
-        // Validation des données
         if (_username.value.isBlank()) {
             _postReviewState.value = PostReviewState.Error("Veuillez entrer votre nom")
             return
@@ -81,11 +74,9 @@ class ReviewViewModel @Inject constructor(
                 onSuccess = {
                     _postReviewState.value = PostReviewState.Success
 
-                    // Réinitialiser les champs
                     _userRating.value = 0
                     _userComment.value = ""
 
-                    // Recharger les commentaires
                     loadReviews(productId)
                 },
                 onFailure = { exception ->
@@ -96,7 +87,6 @@ class ReviewViewModel @Inject constructor(
         }
     }
 
-    // Fonctions pour mettre à jour les états temporaires
     fun updateUsername(name: String) {
         _username.value = name
     }
@@ -109,14 +99,12 @@ class ReviewViewModel @Inject constructor(
         _userComment.value = comment
     }
 
-    // États pour la gestion des commentaires
     sealed class ReviewsState {
         object Loading : ReviewsState()
         data class Success(val reviews: List<Review>) : ReviewsState()
         data class Error(val message: String) : ReviewsState()
     }
 
-    // États pour la gestion de l'envoi d'un commentaire
     sealed class PostReviewState {
         object Idle : PostReviewState()
         object Loading : PostReviewState()

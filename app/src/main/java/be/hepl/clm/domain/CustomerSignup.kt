@@ -2,7 +2,7 @@ package be.hepl.clm.domain
 
 import kotlinx.datetime.Instant
 
-data class CustomerSignupDTO(
+data class CustomerSignup(
     val email: String,
     val password: String,
     val phoneNumber: String,

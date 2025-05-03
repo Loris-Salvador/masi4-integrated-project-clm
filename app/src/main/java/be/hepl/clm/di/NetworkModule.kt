@@ -129,13 +129,10 @@ fun getSecureOkHttpClient(context: Context): OkHttpClient {
     try {
         val certificateFactory = CertificateFactory.getInstance("X.509")
 
-        // Read the certificate file
         val inputStream = context.resources.openRawResource(R.raw.certificat)
 
-        // Clean up the certificate data before processing
         val cleanedCertificateData = inputStream.bufferedReader().use { reader ->
             val content = reader.readText()
-            // Ensure proper formatting
             val startMarker = "-----BEGIN CERTIFICATE-----"
             val endMarker = "-----END CERTIFICATE-----"
 
@@ -143,21 +140,17 @@ fun getSecureOkHttpClient(context: Context): OkHttpClient {
                 throw IllegalStateException("Certificate file doesn't contain proper BEGIN/END markers")
             }
 
-            // Normalize line endings and ensure there's a newline before the end marker
             val normalizedContent = content.replace("\r\n", "\n").replace("\r", "\n")
             if (!normalizedContent.contains("\n$endMarker")) {
-                // Ensure there's a newline before the end marker
                 normalizedContent.replace(endMarker, "\n$endMarker")
             }
 
             normalizedContent.byteInputStream()
         }
 
-        // Generate certificate from cleaned data
         val certificate = certificateFactory.generateCertificate(cleanedCertificateData)
         cleanedCertificateData.close()
 
-        // Setup the key store
         val keyStore = KeyStore.getInstance(KeyStore.getDefaultType()).apply {
             load(null, null)
             setCertificateEntry("server", certificate)
@@ -181,7 +174,6 @@ fun getSecureOkHttpClient(context: Context): OkHttpClient {
             .build()
     } catch (e: Exception) {
         e.printStackTrace()
-        // Fallback to regular HTTP client if certificate loading fails
         return OkHttpClient.Builder().build()
     }
 }

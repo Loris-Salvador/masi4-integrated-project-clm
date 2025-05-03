@@ -1,12 +1,5 @@
 package be.hepl.clm.di
 
-import be.hepl.clm.data.auth.AuthRepository
-import be.hepl.clm.data.auth.AuthRepositoryImpl
-import be.hepl.clm.data.auth.RetrofitAuthApi
-import be.hepl.clm.data.bank.BankApiService
-import be.hepl.clm.data.purchase.PurchaseApiService
-import be.hepl.clm.data.purchase.PurchaseRepository
-import be.hepl.clm.data.purchase.PurchaseRepositoryImpl
 import be.hepl.clm.data.review.ReviewRepository
 import be.hepl.clm.data.review.ReviewService
 import dagger.Binds

@@ -46,7 +46,6 @@ class HomeViewModel @Inject constructor(
                 val categoriesList = repository.getAllCategories()
                 _categories.value = categoriesList
 
-                // Sélectionner automatiquement la première catégorie si la liste n'est pas vide
                 if (categoriesList.isNotEmpty()) {
                     val firstCategory = categoriesList.first()
                     selectCategory(firstCategory)

@@ -4,8 +4,6 @@ import be.hepl.clm.domain.Article
 import be.hepl.clm.domain.Category
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 import javax.inject.Inject

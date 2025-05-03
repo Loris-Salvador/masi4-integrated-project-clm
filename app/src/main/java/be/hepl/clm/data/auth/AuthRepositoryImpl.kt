@@ -1,9 +1,8 @@
 package be.hepl.clm.data.auth
 
-import be.hepl.clm.domain.CustomerSignupDTO
+import be.hepl.clm.domain.CustomerSignup
 import be.hepl.clm.domain.VerifyRequest
 import javax.inject.Inject
-import javax.inject.Named
 
 class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) : AuthRepository {
 
@@ -68,10 +67,10 @@ class AuthRepositoryImpl @Inject constructor(private val api: RetrofitAuthApi) :
         }
     }
 
-    override suspend fun signup(customerSignupDTO: CustomerSignupDTO): Result<String> {
+    override suspend fun signup(customerSignup: CustomerSignup): Result<String> {
         return try {
 
-            val response = api.signup(customerSignupDTO)
+            val response = api.signup(customerSignup)
 
             if (response.isSuccessful && !response.body().isNullOrEmpty()) {
                 Result.success(response.body()!!)

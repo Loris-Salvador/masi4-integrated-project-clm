@@ -19,7 +19,7 @@ data class ChatUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val currentMessage: String = "",
-    val username: String = "Client" // Nom d'utilisateur par défaut
+    val username: String = "Client"
 )
 
 @HiltViewModel
@@ -27,25 +27,20 @@ class ChatViewModel @Inject constructor(
     private val chatRepository: ChatRepository
 ) : ViewModel() {
 
-    // Constante pour le chatId
     private val chatId: Long = 3
 
-    // UI State
     private val _uiState = MutableStateFlow(ChatUiState())
     val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
 
     init {
-        // Initialiser la récupération des messages
         refreshMessages()
 
-        // Observer les messages du repository
         viewModelScope.launch {
             chatRepository.messages.collect { messages ->
                 _uiState.update { it.copy(messages = messages) }
             }
         }
 
-        // Rafraîchir périodiquement les messages (polling)
         startMessagePolling()
     }
 
@@ -74,7 +69,6 @@ class ChatViewModel @Inject constructor(
                         error = null
                     )}
 
-                    // Actualiser les messages après l'envoi
                     refreshMessages()
                 },
                 onFailure = { error ->
@@ -106,7 +100,7 @@ class ChatViewModel @Inject constructor(
     private fun startMessagePolling() {
         viewModelScope.launch {
             while (true) {
-                delay(5000) // Actualiser toutes les 5 secondes
+                delay(5000)
                 refreshMessages()
             }
         }

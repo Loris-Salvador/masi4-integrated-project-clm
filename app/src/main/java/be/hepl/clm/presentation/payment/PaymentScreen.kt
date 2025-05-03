@@ -7,7 +7,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,7 +22,6 @@ fun PaymentScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val message = stringResource(R.string.payment_success)
 
-    // Gestion des succès/erreurs
     LaunchedEffect(uiState.isSuccess, uiState.error) {
         if (uiState.isSuccess) {
             snackbarHostState.showSnackbar(message)
@@ -55,7 +53,6 @@ fun PaymentScreen(
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
-            // Adresse de livraison
             Text(
                 text = stringResource(R.string.shipping_address),
                 style = MaterialTheme.typography.titleMedium,
@@ -100,7 +97,6 @@ fun PaymentScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Informations bancaires
             Text(
                 text = stringResource(R.string.bank_info),
                 style = MaterialTheme.typography.titleMedium,

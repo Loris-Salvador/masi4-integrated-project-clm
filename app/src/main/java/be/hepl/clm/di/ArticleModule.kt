@@ -3,7 +3,6 @@ package be.hepl.clm.di
 import be.hepl.clm.data.article.ApiService
 import be.hepl.clm.data.article.ArticleRepository
 import be.hepl.clm.data.article.ArticleRepositoryImpl
-import be.hepl.clm.data.article.ArticleService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

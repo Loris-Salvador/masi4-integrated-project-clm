@@ -1,13 +1,12 @@
 package be.hepl.clm.presentation.auth.signup
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import be.hepl.clm.data.auth.AuthRepository
-import be.hepl.clm.domain.CustomerSignupDTO
+import be.hepl.clm.domain.CustomerSignup
 import be.hepl.clm.domain.Gender
 import be.hepl.clm.domain.LoginMethod
 import be.hepl.clm.domain.VerifyRequest
@@ -68,8 +67,8 @@ class SignupViewModel @Inject constructor(
         isPasswordVisible.value = !isPasswordVisible.value
     }
 
-    private fun getCustomerDto(): CustomerSignupDTO {
-        return CustomerSignupDTO(
+    private fun getCustomerDto(): CustomerSignup {
+        return CustomerSignup(
             email = email.value,
             password = password.value,
             phoneNumber = phoneNumber.value,

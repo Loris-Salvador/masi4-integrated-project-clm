@@ -25,15 +25,13 @@ class CartManager private constructor() {
         val existingItem = currentItems.find { it.article.id == article.id }
 
         if (existingItem != null) {
-            // Mettre à jour la quantité si l'article existe déjà
             val index = currentItems.indexOf(existingItem)
             val newQuantity = existingItem.quantity + quantity
-            if (newQuantity <= article.stock.quantity) { // Vérification du stock
+            if (newQuantity <= article.stock.quantity) {
                 currentItems[index] = existingItem.copy(quantity = newQuantity)
             }
         } else {
-            // Ajouter un nouvel article
-            if (quantity <= article.stock.quantity) { // Vérification du stock
+            if (quantity <= article.stock.quantity) {
                 currentItems.add(CartItem(article, quantity))
             }
         }
