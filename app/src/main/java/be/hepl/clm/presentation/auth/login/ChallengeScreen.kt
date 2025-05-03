@@ -15,11 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import be.hepl.clm.R
 import be.hepl.clm.domain.LoginMethod
 
 @Composable
@@ -37,13 +39,13 @@ fun ChallengeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if(method == LoginMethod.EMAIL)
-            Text("Vous avez reçu un email avec un code", textAlign = TextAlign.Center, fontSize = 24.sp, lineHeight = 40.sp)
+            Text(stringResource((R.string.you_received_an_email_with_a_code)), textAlign = TextAlign.Center, fontSize = 24.sp, lineHeight = 40.sp)
         else
-            Text("Vous avez reçu un message avec un code", textAlign = TextAlign.Center, fontSize = 24.sp, lineHeight = 40.sp)
+            Text(stringResource((R.string.you_received_an_email_with_a_code)), textAlign = TextAlign.Center, fontSize = 24.sp, lineHeight = 40.sp)
 
         Spacer(modifier = Modifier.height(175.dp))
 
-        Text("Veuillez entrer le code reçu", style = MaterialTheme.typography.titleMedium)
+        Text(stringResource((R.string.please_enter_the_received_code)), style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(16.dp))
 
         CodeInputField(loginViewModel)
@@ -65,7 +67,7 @@ fun ChallengeScreen(
                 }}) },
             enabled = loginViewModel.challenge.length == 6
         ) {
-            Text("Valider")
+            Text(stringResource((R.string.validate)))
         }
     }
 }
@@ -82,7 +84,7 @@ fun CodeInputField(loginViewModel: LoginViewModel) {
             }
         },
         placeholder = { Text("XXXXXX") },
-        label = { Text("Code à 6 chiffres") },
+        label = { Text(stringResource((R.string.six_letter_code))) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.NumberPassword

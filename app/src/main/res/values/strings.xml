@@ -1,3 +1,105 @@
 <resources>
-    <string name="app_name">MasiMart</string>
+    <string name="app_name" translatable="false">MasiMart</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="masi_id">MASI ID</string>
+    <string name="or">or</string>
+    <string name="you_have_no_account">Don’t have an account?</string>
+    <string name="sign_up_here">Create one here</string>
+    <string name="choose_your_connection_method">Select your login method</string>
+    <string name="sms">SMS</string>
+    <string name="you_received_an_email_with_a_code">We sent you a code by email</string>
+    <string name="you_received_an_sms_with_a_code">We sent you a code by text message</string>
+    <string name="please_enter_the_received_code">Enter the code you received</string>
+    <string name="validate">Confirm</string>
+    <string name="six_letter_code">6-digit code</string>
+    <string name="login_sucessfull">Successfully logged in</string>
+    <string name="masi_id_login">MASI ID Login</string>
+    <string name="phone_number">Phone number</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="please_check_your_masi_id_app_to_confirm_login">Check your MASI ID app to confirm login</string>
+    <string name="signup">Sign up</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="select_gender">Select gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="birthdate">Date of birth</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="verify_email_title">Email verification</string>
+
+    <!-- Cart -->
+    <string name="cart_title">Your cart</string>
+    <string name="cart_empty">Your cart is empty</string>
+    <string name="cart_empty_message">Add items to start shopping</string>
+    <string name="cart_total">Total</string>
+    <string name="cart_validate_button">Proceed to checkout</string>
+    <string name="cart_clear_button">Clear cart</string>
+    <string name="no_image">No image</string>
+    <string name="remove">Remove</string>
+    <string name="quantity_increase">Increase quantity</string>
+    <string name="quantity_decrease">Decrease quantity</string>
+
+    <!-- Chat -->
+    <string name="chat_title">Customer Support</string>
+    <string name="chat_no_message">No messages yet. Start the conversation!</string>
+    <string name="chat_input_placeholder">Type your message...</string>
+    <string name="chat_send">Send</string>
+
+    <!-- Product Details -->
+    <string name="product_details_title">Product details</string>
+    <string name="back">Back</string>
+    <string name="no_image_available">No image available</string>
+    <string name="description">Description</string>
+    <string name="availability">Availability</string>
+    <string name="in_stock">In stock (%1$d available)</string>
+    <string name="limited_stock">Limited stock (%1$d left)</string>
+    <string name="out_of_stock">Out of stock</string>
+    <string name="quantity">Quantity:</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="product_unavailable">Product unavailable</string>
+
+    <!-- Home -->
+    <string name="home_title">Our products</string>
+    <string name="choose_category">Select a category</string>
+    <string name="no_article_found">No products found in this category</string>
+    <string name="error">Error</string>
+    <string name="retry">Try again</string>
+    <string name="filter_by_category">Filter by category</string>
+
+    <!-- Payment -->
+    <string name="payment_title">Payment Information</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="street">Street</string>
+    <string name="number">Number</string>
+    <string name="postal_code">Postal Code</string>
+    <string name="city">City</string>
+    <string name="bank_info">Bank Details</string>
+    <string name="card_number">Card number (IBAN)</string>
+    <string name="bank_name">Bank name</string>
+    <string name="communication">Communication</string>
+    <string name="submit_payment">Confirm payment</string>
+    <string name="payment_success">Payment completed successfully!</string>
+
+    <!-- Reviews -->
+    <string name="review_section_title">Customer reviews</string>
+    <string name="review_form_title">Leave a review</string>
+    <string name="your_name">Your name</string>
+    <string name="name_icon_description">Name</string>
+    <string name="your_rating">Your rating:</string>
+    <string name="your_comment_optional">Your comment (optional)</string>
+    <string name="send_review">Submit</string>
+    <string name="review_success">Your review has been submitted successfully!</string>
+    <string name="no_reviews">No reviews yet. Be the first to share yours!</string>
+    <string name="star_icon_description">Star %1$d</string>
+    <string name="avatar_icon_description">Avatar</string>
+
+    <!-- Bottom navigation -->
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_cart">Cart</string>
+    <string name="bottom_nav_chat">Chat</string>
+
 </resources>

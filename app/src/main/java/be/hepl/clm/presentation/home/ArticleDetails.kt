@@ -15,11 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import be.hepl.clm.R
 import be.hepl.clm.domain.Article
 import be.hepl.clm.domain.CartManager
 import be.hepl.clm.presentation.review.ReviewSection
@@ -40,10 +41,10 @@ fun ArticleDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Détails du produit") },
+                title = { Text(stringResource(R.string.product_details_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Retour")
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 }
             )
@@ -59,7 +60,6 @@ fun ArticleDetailScreen(
                     .fillMaxWidth()
                     .verticalScroll(scrollState)
             ) {
-                // Image principale
                 if (article.pictures.isNotEmpty()) {
                     AsyncImage(
                         model = article.pictures.first().path,
@@ -77,24 +77,21 @@ fun ArticleDetailScreen(
                             .background(Color.LightGray),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("Pas d'image disponible")
+                        Text(stringResource(R.string.no_image_available))
                     }
                 }
 
-                // Informations sur l'article
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    // Catégorie
                     Text(
                         text = article.category.category,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary
                     )
 
-                    // Nom
                     Text(
                         text = article.name,
                         style = MaterialTheme.typography.headlineSmall,
@@ -102,13 +99,11 @@ fun ArticleDetailScreen(
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
 
-                    // Prix avec promotion si applicable
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.padding(vertical = 8.dp)
                     ) {
                         if (article.promotion > 0) {
-                            // Prix barré
                             Text(
                                 text = "${article.price}€",
                                 style = MaterialTheme.typography.bodyLarge,
@@ -118,7 +113,6 @@ fun ArticleDetailScreen(
 
                             Spacer(modifier = Modifier.width(8.dp))
 
-                            // Nouveau prix
                             val newPrice = article.price * (1 - article.promotion / 100.0)
                             Text(
                                 text = String.format("%.2f€", newPrice),
@@ -129,7 +123,6 @@ fun ArticleDetailScreen(
 
                             Spacer(modifier = Modifier.width(8.dp))
 
-                            // Badge promotion
                             Surface(
                                 color = MaterialTheme.colorScheme.error,
                                 shape = RoundedCornerShape(4.dp)
@@ -142,7 +135,6 @@ fun ArticleDetailScreen(
                                 )
                             }
                         } else {
-                            // Prix normal
                             Text(
                                 text = "${article.price}€",
                                 style = MaterialTheme.typography.headlineMedium,
@@ -151,9 +143,8 @@ fun ArticleDetailScreen(
                         }
                     }
 
-                    // Description
                     Text(
-                        text = "Description",
+                        text = stringResource(R.string.description),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
@@ -164,16 +155,15 @@ fun ArticleDetailScreen(
                         style = MaterialTheme.typography.bodyMedium
                     )
 
-                    // Disponibilité
                     val stockColor = when {
                         article.stock.quantity > 100 -> Color.Green
-                        article.stock.quantity > 20 -> Color(0xFFFFA500) // Orange
+                        article.stock.quantity > 20 -> Color(0xFFFFA500)
                         article.stock.quantity > 0 -> Color.Red
                         else -> Color.Gray
                     }
 
                     Text(
-                        text = "Disponibilité",
+                        text = stringResource(R.string.availability),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
@@ -181,15 +171,16 @@ fun ArticleDetailScreen(
 
                     Text(
                         text = when {
-                            article.stock.quantity > 100 -> "En stock (${article.stock.quantity} disponibles)"
-                            article.stock.quantity > 0 -> "Stock limité (${article.stock.quantity} disponibles)"
-                            else -> "Rupture de stock"
+                            article.stock.quantity > 100 ->
+                                stringResource(R.string.in_stock, article.stock.quantity)
+                            article.stock.quantity > 0 ->
+                                stringResource(R.string.limited_stock, article.stock.quantity)
+                            else -> stringResource(R.string.out_of_stock)
                         },
                         style = MaterialTheme.typography.bodyMedium,
                         color = stockColor
                     )
 
-                    // Contrôle de quantité et bouton d'achat
                     if (article.stock.quantity > 0) {
                         Row(
                             modifier = Modifier
@@ -198,12 +189,11 @@ fun ArticleDetailScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Quantité:",
+                                text = stringResource(R.string.quantity),
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.padding(end = 16.dp)
                             )
 
-                            // Contrôles de quantité
                             Button(
                                 onClick = { if (quantity > 1) quantity-- },
                                 modifier = Modifier.size(40.dp),
@@ -229,11 +219,9 @@ fun ArticleDetailScreen(
                             }
                         }
 
-                        // Bouton Ajouter au panier
                         Button(
                             onClick = {
                                 cartManager.addItem(article, quantity)
-                                // Message de confirmation optionnel
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -245,25 +233,22 @@ fun ArticleDetailScreen(
                                 contentDescription = null,
                                 modifier = Modifier.padding(end = 8.dp)
                             )
-                            Text("Ajouter au panier")
+                            Text(stringResource(R.string.add_to_cart))
                         }
                     } else {
-                        // Message de rupture de stock
                         Button(
-                            onClick = { /* Potentiellement gérer une notification quand disponible */ },
+                            onClick = {},
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp),
                             enabled = false
                         ) {
-                            Text("Produit indisponible")
+                            Text(stringResource(R.string.product_unavailable))
                         }
                     }
 
-                    // Séparateur avant la section des commentaires
                     Divider(modifier = Modifier.padding(vertical = 16.dp))
 
-                    // Section des commentaires
                     ReviewSection(
                         productId = article.id,
                         viewModel = reviewViewModel

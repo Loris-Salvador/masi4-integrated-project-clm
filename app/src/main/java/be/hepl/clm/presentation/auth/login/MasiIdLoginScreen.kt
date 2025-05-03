@@ -8,10 +8,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import be.hepl.clm.R
 import be.hepl.clm.presentation.navigation.Destinations
 import kotlinx.coroutines.launch
 
@@ -25,6 +27,8 @@ fun MasiIdLoginScreen(
     val connectionState = viewModel.connectionState.collectAsState()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val message = stringResource(R.string.login_sucessfull)
+
 
     LaunchedEffect(connectionState.value) {
         when (connectionState.value) {
@@ -36,7 +40,7 @@ fun MasiIdLoginScreen(
                 ).show()
             }
             is MasiIdConnectionState.Success -> {
-                Toast.makeText(context, "Login successful!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 navController.navigate(Destinations.HOME) {
                     popUpTo(Destinations.LOGIN) { inclusive = true }
                 }
@@ -66,7 +70,7 @@ fun MasiIdLoginScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "MASI ID Login",
+                text = stringResource(R.string.masi_id),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
@@ -74,8 +78,8 @@ fun MasiIdLoginScreen(
             OutlinedTextField(
                 value = phoneNumber.value,
                 onValueChange = { viewModel.updatePhoneNumber(it) },
-                label = { Text("Phone Number") },
-                placeholder = { Text("Enter your phone number") },
+                label = { Text(stringResource(R.string.phone_number)) },
+                placeholder = { Text(stringResource(R.string.masi_id)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -101,7 +105,7 @@ fun MasiIdLoginScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 } else {
-                    Text("Login with MASI ID")
+                    Text(stringResource(R.string.masi_id_login))
                 }
             }
 
@@ -109,7 +113,7 @@ fun MasiIdLoginScreen(
                 is MasiIdConnectionState.WaitingForAppConfirmation -> {
                     Spacer(modifier = Modifier.height(24.dp))
                     Text(
-                        "Please check your MASI ID app to confirm login",
+                        stringResource(R.string.please_check_your_masi_id_app_to_confirm_login),
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Spacer(modifier = Modifier.height(16.dp))

@@ -12,10 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import be.hepl.clm.R
 import be.hepl.clm.presentation.theme.loginButtonColors
 
 @Composable
@@ -32,7 +34,7 @@ fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavControlle
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = "Choisissez votre méthode de connexion",
+            text = stringResource((R.string.choose_your_connection_method)),
             textAlign = TextAlign.Center,
             fontSize = 22.sp,
             modifier = Modifier.padding(bottom = 32.dp)
@@ -57,7 +59,7 @@ fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavControlle
                     .height(50.dp),
                 colors = loginButtonColors()
             ) {
-                Text(text = "SMS", fontSize = 18.sp)
+                Text(text = stringResource((R.string.sms)), fontSize = 18.sp)
             }
 
             Button(
@@ -76,7 +78,7 @@ fun LoginChoiceScreen(modifier: Modifier = Modifier, navController: NavControlle
                     .height(50.dp),
                 colors = loginButtonColors()
             ) {
-                Text(text = "Email", fontSize = 18.sp)
+                Text(text = stringResource((R.string.email)), fontSize = 18.sp)
             }
         }
     }

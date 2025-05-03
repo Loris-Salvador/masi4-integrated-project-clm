@@ -18,7 +18,7 @@ import be.hepl.clm.presentation.auth.login.MasiIdLoginScreen
 import be.hepl.clm.presentation.auth.login.MasiIdViewModel
 import be.hepl.clm.presentation.auth.signup.SignupScreen
 import be.hepl.clm.presentation.auth.signup.SignupViewModel
-import be.hepl.clm.presentation.auth.signup.VerifyEmail
+import be.hepl.clm.presentation.auth.signup.VerifyEmailScreen
 import be.hepl.clm.presentation.cart.CartScreen
 import be.hepl.clm.presentation.chat.ChatScreen
 import be.hepl.clm.presentation.home.HomeScreen
@@ -53,7 +53,7 @@ fun AppNavHost(modifier: Modifier) {
             SignupScreen(signupViewModel ,navController)
         }
         composable(Destinations.VERIFY_EMAIL) {
-            VerifyEmail(navController = navController, signupViewModel = signupViewModel)
+            VerifyEmailScreen(navController = navController, signupViewModel = signupViewModel)
         }
         composable(Destinations.HOME) {
             val homeViewModel: HomeViewModel = hiltViewModel()

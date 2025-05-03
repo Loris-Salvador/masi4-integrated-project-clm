@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -72,7 +73,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, log
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        LoginText("ou")
+        LoginText(stringResource((R.string.or)))
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -80,11 +81,11 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, log
 
         Spacer(modifier = Modifier.height(50.dp))
 
-        LoginText("Vous n'avez pas de compte ?")
+        LoginText(stringResource((R.string.you_have_no_account)))
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        LoginClickableText("Créer un compte ici", navController)
+        LoginClickableText(stringResource((R.string.sign_up_here)), navController)
     }
 }
 
@@ -93,7 +94,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, log
 @Composable
 fun LoginTitleText() {
     Text(
-        text = "Login",
+        text = stringResource((R.string.login)),
         fontSize = 55.sp,
     )
 }
@@ -105,7 +106,7 @@ fun LoginEmailTextField(loginViewModel: LoginViewModel) {
         onValueChange = { newEmail ->
             loginViewModel.onEmailChanged(newEmail)
         },
-        label = { Text("Email") },
+        label = { Text(stringResource((R.string.email))) },
         modifier = Modifier.fillMaxWidth(),
         singleLine = true,
     )
@@ -118,7 +119,7 @@ fun LoginPasswordTextField(loginViewModel: LoginViewModel) {
         onValueChange = { newPassword ->
             loginViewModel.onPasswordChanged(newPassword)
         },
-        label = { Text("Password") },
+        label = { Text(stringResource((R.string.password))) },
         modifier = Modifier.fillMaxWidth(),
         singleLine = true,
         visualTransformation = PasswordVisualTransformation()
@@ -143,7 +144,7 @@ fun LoginButton(navController: NavController) {
         colors = loginButtonColors()
     ) {
         Text(
-            text = "Login",
+            text = stringResource((R.string.login)),
             fontSize = 18.sp
         )
     }
@@ -167,7 +168,7 @@ fun MasiIdLoginButton(navController: NavController) {
                 modifier = Modifier.size(50.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "MASI ID", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+            Text(text = stringResource((R.string.masi_id)), textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
         }
     }
 }

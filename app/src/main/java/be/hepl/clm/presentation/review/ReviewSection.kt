@@ -4,8 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -18,10 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import be.hepl.clm.R
 import be.hepl.clm.domain.Review
 
 @Composable
@@ -35,7 +35,6 @@ fun ReviewSection(
     val userComment by viewModel.userComment.collectAsState()
     val username by viewModel.username.collectAsState()
 
-    // Charger les commentaires au démarrage
     LaunchedEffect(productId) {
         viewModel.loadReviews(productId)
     }
@@ -46,13 +45,12 @@ fun ReviewSection(
             .padding(vertical = 16.dp)
     ) {
         Text(
-            text = "Avis client",
+            text = stringResource(R.string.review_section_title),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // Formulaire d'ajout de commentaire
         AddReviewForm(
             username = username,
             rating = userRating,
@@ -68,7 +66,6 @@ fun ReviewSection(
         Divider()
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Liste des commentaires
         when (reviewsState) {
             is ReviewViewModel.ReviewsState.Loading -> {
                 Box(
@@ -90,21 +87,18 @@ fun ReviewSection(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            "Aucun avis pour ce produit. Soyez le premier à donner votre avis !",
+                            text = stringResource(R.string.no_reviews),
                             style = MaterialTheme.typography.bodyMedium,
                             fontStyle = FontStyle.Italic
                         )
                     }
                 } else {
-                    // Remplacer LazyColumn par une liste statique pour éviter le conflit de défilement
                     Column(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         reviews.forEach { review ->
                             ReviewItem(review = review)
-                            Divider(
-                                modifier = Modifier.padding(vertical = 8.dp)
-                            )
+                            Divider(modifier = Modifier.padding(vertical = 8.dp))
                         }
                     }
                 }
@@ -118,7 +112,7 @@ fun ReviewSection(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        errorMessage,
+                        text = errorMessage,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.error
                     )
@@ -150,19 +144,18 @@ fun AddReviewForm(
             .padding(16.dp)
     ) {
         Text(
-            text = "Donnez votre avis",
+            text = stringResource(R.string.review_form_title),
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // Champ pour le nom d'utilisateur
         OutlinedTextField(
             value = username,
             onValueChange = onUsernameChange,
-            label = { Text("Votre nom") },
+            label = { Text(stringResource(R.string.your_name)) },
             leadingIcon = {
-                Icon(Icons.Default.Person, contentDescription = "Nom")
+                Icon(Icons.Default.Person, contentDescription = stringResource(R.string.name_icon_description))
             },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
@@ -170,12 +163,9 @@ fun AddReviewForm(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Sélection de la note
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "Votre note:",
+                text = stringResource(R.string.your_rating),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(end = 16.dp)
             )
@@ -189,11 +179,10 @@ fun AddReviewForm(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Champ pour le commentaire
         OutlinedTextField(
             value = comment,
             onValueChange = onCommentChange,
-            label = { Text("Votre commentaire (optionnel)") },
+            label = { Text(stringResource(R.string.your_comment_optional)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(120.dp),
@@ -202,7 +191,6 @@ fun AddReviewForm(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Message d'erreur
         if (postState is ReviewViewModel.PostReviewState.Error) {
             Text(
                 text = postState.message,
@@ -212,7 +200,6 @@ fun AddReviewForm(
             )
         }
 
-        // Bouton d'envoi
         Button(
             onClick = onSubmit,
             modifier = Modifier.align(Alignment.End),
@@ -225,15 +212,14 @@ fun AddReviewForm(
                     strokeWidth = 2.dp
                 )
             } else {
-                Text("Envoyer")
+                Text(stringResource(R.string.send_review))
             }
         }
 
-        // Message de succès
         if (postState is ReviewViewModel.PostReviewState.Success) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Votre avis a été ajouté avec succès !",
+                text = stringResource(R.string.review_success),
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Green,
                 modifier = Modifier.align(Alignment.End)
@@ -251,36 +237,13 @@ fun StarRating(
     Row(modifier = modifier) {
         for (i in 1..5) {
             Icon(
-                imageVector = if (i <= currentRating) {
-                    Icons.Default.Star
-                } else {
-                    Icons.Default.StarBorder
-                },
-                contentDescription = "Étoile $i",
-                tint = if (i <= currentRating) {
-                    Color(0xFFFFC107) // Jaune pour les étoiles sélectionnées
-                } else {
-                    Color.Gray
-                },
+                imageVector = if (i <= currentRating) Icons.Default.Star else Icons.Default.StarBorder,
+                contentDescription = stringResource(R.string.star_icon_description, i),
+                tint = if (i <= currentRating) Color(0xFFFFC107) else Color.Gray,
                 modifier = Modifier
                     .size(28.dp)
                     .clickable { onRatingChanged(i) }
                     .padding(2.dp)
-            )
-        }
-    }
-}
-
-// Cette fonction n'est plus utilisée mais gardée pour référence
-@Composable
-fun ReviewList(reviews: List<Review>) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        items(reviews) { review ->
-            ReviewItem(review = review)
-            Divider(
-                modifier = Modifier.padding(vertical = 8.dp)
             )
         }
     }
@@ -293,11 +256,7 @@ fun ReviewItem(review: Review) {
             .fillMaxWidth()
             .padding(vertical = 8.dp)
     ) {
-        // En-tête avec nom et avatar
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Avatar simple
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
                     .size(40.dp)
@@ -307,14 +266,13 @@ fun ReviewItem(review: Review) {
             ) {
                 Icon(
                     imageVector = Icons.Default.Person,
-                    contentDescription = "Avatar",
+                    contentDescription = stringResource(R.string.avatar_icon_description),
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            // Nom et date
             Column {
                 Text(
                     text = review.username,
@@ -322,7 +280,7 @@ fun ReviewItem(review: Review) {
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "",
+                    text = "", // future date?
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray
                 )
@@ -330,28 +288,18 @@ fun ReviewItem(review: Review) {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Affichage de la note
             Row {
                 for (i in 1..5) {
                     Icon(
-                        imageVector = if (i <= review.rating) {
-                            Icons.Default.Star
-                        } else {
-                            Icons.Default.StarBorder
-                        },
+                        imageVector = if (i <= review.rating) Icons.Default.Star else Icons.Default.StarBorder,
                         contentDescription = null,
-                        tint = if (i <= review.rating) {
-                            Color(0xFFFFC107) // Jaune
-                        } else {
-                            Color.Gray
-                        },
+                        tint = if (i <= review.rating) Color(0xFFFFC107) else Color.Gray,
                         modifier = Modifier.size(20.dp)
                     )
                 }
             }
         }
 
-        // Commentaire
         if (review.comment.isNotBlank()) {
             Text(
                 text = review.comment,

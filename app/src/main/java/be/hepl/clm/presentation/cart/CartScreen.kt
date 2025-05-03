@@ -1,14 +1,11 @@
 package be.hepl.clm.presentation.cart
 
-
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -17,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,6 +23,7 @@ import androidx.navigation.NavController
 import be.hepl.clm.domain.CartItem
 import be.hepl.clm.domain.CartManager
 import coil.compose.AsyncImage
+import be.hepl.clm.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,8 +37,7 @@ fun CartScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Votre panier") },
-                
+                title = { Text(stringResource(R.string.cart_title)) },
             )
         }
     ) { innerPadding ->
@@ -49,7 +47,6 @@ fun CartScreen(
                 .padding(innerPadding)
         ) {
             if (items.isEmpty()) {
-                // Panier vide
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -59,13 +56,13 @@ fun CartScreen(
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Votre panier est vide",
+                            text = stringResource(R.string.cart_empty),
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "Ajoutez des articles pour commencer vos achats",
+                            text = stringResource(R.string.cart_empty_message),
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.Gray
                         )
@@ -73,7 +70,6 @@ fun CartScreen(
                     }
                 }
             } else {
-                // Panier avec articles
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -92,7 +88,6 @@ fun CartScreen(
                     }
                 }
 
-                // Résumé du panier et bouton de validation
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
                     color = MaterialTheme.colorScheme.surface,
@@ -110,7 +105,7 @@ fun CartScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = "Total",
+                                text = stringResource(R.string.cart_total),
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Bold
                             )
@@ -126,7 +121,7 @@ fun CartScreen(
                             onClick = { navController.navigate("payment") },
                             modifier = Modifier.fillMaxWidth(),
                         ) {
-                            Text("Valider mon panier")
+                            Text(stringResource(R.string.cart_validate_button))
                         }
 
                         TextButton(
@@ -135,7 +130,7 @@ fun CartScreen(
                                 .fillMaxWidth()
                                 .padding(top = 8.dp)
                         ) {
-                            Text("Vider mon panier")
+                            Text(stringResource(R.string.cart_clear_button))
                         }
                     }
                 }
@@ -153,7 +148,6 @@ fun CartItemCard(
     val article = cartItem.article
     var quantity by remember { mutableIntStateOf(cartItem.quantity) }
 
-    // Mettre à jour la quantité dans le gestionnaire lorsqu'elle change
     LaunchedEffect(quantity) {
         if (quantity != cartItem.quantity) {
             onUpdateQuantity(quantity)
@@ -170,7 +164,6 @@ fun CartItemCard(
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Image de l'article
             if (article.pictures.isNotEmpty()) {
                 AsyncImage(
                     model = article.pictures.first().path,
@@ -188,11 +181,14 @@ fun CartItemCard(
                         .background(Color.LightGray),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("Pas d'image", color = Color.White, fontSize = MaterialTheme.typography.bodySmall.fontSize)
+                    Text(
+                        text = stringResource(R.string.no_image),
+                        color = Color.White,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize
+                    )
                 }
             }
 
-            // Informations sur l'article
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -208,7 +204,6 @@ fun CartItemCard(
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                // Prix avec promotion si applicable
                 if (article.promotion > 0) {
                     val discountedPrice = article.price * (1 - article.promotion / 100.0)
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -218,9 +213,7 @@ fun CartItemCard(
                             textDecoration = TextDecoration.LineThrough,
                             color = Color.Gray
                         )
-
                         Spacer(modifier = Modifier.width(8.dp))
-
                         Text(
                             text = String.format("%.2f€", discountedPrice),
                             style = MaterialTheme.typography.bodyMedium,
@@ -237,17 +230,14 @@ fun CartItemCard(
                 }
             }
 
-            // Contrôles de quantité et suppression
-            Column(
-                horizontalAlignment = Alignment.End
-            ) {
+            Column(horizontalAlignment = Alignment.End) {
                 IconButton(
                     onClick = onRemoveItem,
                     modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Supprimer",
+                        contentDescription = stringResource(R.string.remove),
                         tint = MaterialTheme.colorScheme.error
                     )
                 }

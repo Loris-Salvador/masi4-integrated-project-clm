@@ -17,10 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import be.hepl.clm.R
 import be.hepl.clm.domain.Article
 import be.hepl.clm.domain.Category
 import coil.compose.AsyncImage
@@ -35,7 +37,6 @@ fun HomeScreen(viewModel: HomeViewModel) {
     val cartItems by viewModel.cartManager.items.collectAsState()
     val cartItemCount by viewModel.cartManager.totalItems.collectAsState()
 
-    // Si un article est sélectionné, afficher l'écran de détails
     if (selectedArticle != null) {
         ArticleDetailScreen(
             article = selectedArticle!!,
@@ -44,11 +45,10 @@ fun HomeScreen(viewModel: HomeViewModel) {
         return
     }
 
-    // Écran principal avec panier
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Nos produits") },
+                title = { Text(stringResource(R.string.home_title)) },
             )
         }
     ) { innerPadding ->
@@ -59,7 +59,6 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
         ) {
-            // Filtres par catégorie
             CategoryFilter(
                 categories = categories,
                 selectedCategoryName = selectedCategoryName,
@@ -68,7 +67,6 @@ fun HomeScreen(viewModel: HomeViewModel) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Contenu principal
             when (uiState) {
                 is ArticleUiState.Loading -> {
                     Box(
@@ -81,16 +79,13 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 is ArticleUiState.Success -> {
                     val filteredArticles = viewModel.getFilteredArticles()
 
-                    Log.d("jsp", viewModel.getCategoryNames().toString())
-
                     if (selectedCategoryName == null) {
-                        // Message à afficher quand aucune catégorie n'est sélectionnée
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "Choisissez une catégorie",
+                                text = stringResource(R.string.choose_category),
                                 style = MaterialTheme.typography.titleMedium,
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -100,11 +95,9 @@ fun HomeScreen(viewModel: HomeViewModel) {
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text("Aucun article trouvé dans cette catégorie")
+                            Text(stringResource(R.string.no_article_found))
                         }
                     } else {
-                        Log.d("jsp", "articles list")
-
                         ArticleList(
                             articles = filteredArticles,
                             onArticleClick = { viewModel.selectArticle(it) },
@@ -120,7 +113,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
-                                text = "Erreur",
+                                text = stringResource(R.string.error),
                                 style = MaterialTheme.typography.headlineSmall,
                                 color = MaterialTheme.colorScheme.error
                             )
@@ -133,7 +126,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
                                 onClick = { viewModel.loadArticles() },
                                 modifier = Modifier.padding(top = 16.dp)
                             ) {
-                                Text("Réessayer")
+                                Text(stringResource(R.string.retry))
                             }
                         }
                     }
@@ -151,7 +144,7 @@ fun CategoryFilter(
 ) {
     Column {
         Text(
-            text = "Filtrer par catégorie",
+            text = stringResource(R.string.filter_by_category),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(bottom = 8.dp)
         )
@@ -160,8 +153,6 @@ fun CategoryFilter(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-
-            // Catégories
             items(categories) { category ->
                 FilterChip(
                     selected = selectedCategoryName == category.category,
@@ -211,8 +202,6 @@ fun ArticleCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-
-            // Image de l'article avec bouton d'ajout au panier
             Box(modifier = Modifier.fillMaxWidth()) {
                 if (article.pictures.isNotEmpty()) {
                     AsyncImage(
@@ -225,7 +214,6 @@ fun ArticleCard(
                         contentScale = ContentScale.Crop
                     )
                 } else {
-                    // Placeholder si pas d'image
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -235,13 +223,12 @@ fun ArticleCard(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "Pas d'image disponible",
+                            text = stringResource(R.string.no_image_available),
                             color = Color.White
                         )
                     }
                 }
 
-                // Bouton d'ajout rapide au panier
                 if (article.stock.quantity > 0) {
                     FloatingActionButton(
                         onClick = { onAddToCartClick() },
@@ -254,14 +241,13 @@ fun ArticleCard(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Add,
-                            contentDescription = "Ajouter au panier",
+                            contentDescription = stringResource(R.string.add_to_cart),
                             modifier = Modifier.size(20.dp)
                         )
                     }
                 }
             }
 
-            // Badge promotion si promotion > 0
             if (article.promotion > 0) {
                 Surface(
                     color = MaterialTheme.colorScheme.error,
@@ -279,20 +265,17 @@ fun ArticleCard(
                 }
             }
 
-            // Détails de l'article
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                // Catégorie
                 Text(
                     text = article.category.category,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary
                 )
 
-                // Nom de l'article
                 Text(
                     text = article.name,
                     style = MaterialTheme.typography.titleMedium,
@@ -302,7 +285,6 @@ fun ArticleCard(
                     modifier = Modifier.padding(vertical = 4.dp)
                 )
 
-                // Description
                 Text(
                     text = article.description,
                     style = MaterialTheme.typography.bodyMedium,
@@ -311,26 +293,20 @@ fun ArticleCard(
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
-                // Prix et disponibilité
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Prix avec promotion si applicable
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         if (article.promotion > 0) {
-                            // Prix barré
                             Text(
                                 text = "${article.price}€",
                                 style = MaterialTheme.typography.bodyMedium,
                                 textDecoration = TextDecoration.LineThrough,
                                 color = Color.Gray
                             )
-
                             Spacer(modifier = Modifier.width(8.dp))
-
-                            // Nouveau prix
                             val newPrice = article.price * (1 - article.promotion / 100.0)
                             Text(
                                 text = String.format("%.2f€", newPrice),
@@ -339,7 +315,6 @@ fun ArticleCard(
                                 color = MaterialTheme.colorScheme.error
                             )
                         } else {
-                            // Prix normal
                             Text(
                                 text = "${article.price}€",
                                 style = MaterialTheme.typography.titleMedium,
@@ -348,15 +323,17 @@ fun ArticleCard(
                         }
                     }
 
-                    // Indicateur de stock
                     val stockColor = when {
                         article.stock.quantity > 100 -> Color.Green
-                        article.stock.quantity > 20 -> Color(0xFFFFA500) // Orange
+                        article.stock.quantity > 20 -> Color(0xFFFFA500)
                         else -> Color.Red
                     }
 
                     Text(
-                        text = if (article.stock.quantity > 0) "En stock" else "Rupture",
+                        text = if (article.stock.quantity > 0)
+                            stringResource(R.string.in_stock)
+                        else
+                            stringResource(R.string.out_of_stock),
                         style = MaterialTheme.typography.bodySmall,
                         color = stockColor
                     )

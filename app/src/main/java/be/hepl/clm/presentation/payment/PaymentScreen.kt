@@ -1,33 +1,18 @@
 package be.hepl.clm.presentation.payment
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import be.hepl.clm.R
 
 @Composable
 fun PaymentScreen(
@@ -36,13 +21,12 @@ fun PaymentScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
+    val message = stringResource(R.string.payment_success)
 
-    // Handle success/error states
+    // Gestion des succès/erreurs
     LaunchedEffect(uiState.isSuccess, uiState.error) {
         if (uiState.isSuccess) {
-            snackbarHostState.showSnackbar("Paiement validé avec succès!")
-            // Navigate back to the main screen or order confirmation
+            snackbarHostState.showSnackbar(message)
             navController.navigate("home") {
                 popUpTo("home") { inclusive = true }
             }
@@ -66,14 +50,14 @@ fun PaymentScreen(
             verticalArrangement = Arrangement.Top
         ) {
             Text(
-                text = "Informations de paiement",
+                text = stringResource(R.string.payment_title),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
             // Adresse de livraison
             Text(
-                text = "Adresse de livraison",
+                text = stringResource(R.string.shipping_address),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .align(Alignment.Start)
@@ -83,7 +67,7 @@ fun PaymentScreen(
             OutlinedTextField(
                 value = uiState.street,
                 onValueChange = { viewModel.updateStreet(it) },
-                label = { Text("Rue") },
+                label = { Text(stringResource(R.string.street)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -92,7 +76,7 @@ fun PaymentScreen(
             OutlinedTextField(
                 value = uiState.number,
                 onValueChange = { viewModel.updateNumber(it) },
-                label = { Text("Numéro") },
+                label = { Text(stringResource(R.string.number)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -101,7 +85,7 @@ fun PaymentScreen(
             OutlinedTextField(
                 value = uiState.postalCode,
                 onValueChange = { viewModel.updatePostalCode(it) },
-                label = { Text("Code postal") },
+                label = { Text(stringResource(R.string.postal_code)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -110,7 +94,7 @@ fun PaymentScreen(
             OutlinedTextField(
                 value = uiState.city,
                 onValueChange = { viewModel.updateCity(it) },
-                label = { Text("Ville") },
+                label = { Text(stringResource(R.string.city)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -118,7 +102,7 @@ fun PaymentScreen(
 
             // Informations bancaires
             Text(
-                text = "Informations bancaires",
+                text = stringResource(R.string.bank_info),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .align(Alignment.Start)
@@ -128,7 +112,7 @@ fun PaymentScreen(
             OutlinedTextField(
                 value = uiState.cardNumber,
                 onValueChange = { viewModel.updateCardNumber(it) },
-                label = { Text("Numéro de carte (IBAN)") },
+                label = { Text(stringResource(R.string.card_number)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -137,7 +121,7 @@ fun PaymentScreen(
             OutlinedTextField(
                 value = uiState.customerBank,
                 onValueChange = { viewModel.updateCustomerBank(it) },
-                label = { Text("Nom de la banque") },
+                label = { Text(stringResource(R.string.bank_name)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -146,7 +130,7 @@ fun PaymentScreen(
             OutlinedTextField(
                 value = uiState.communication,
                 onValueChange = { viewModel.updateCommunication(it) },
-                label = { Text("Communication") },
+                label = { Text(stringResource(R.string.communication)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -163,7 +147,7 @@ fun PaymentScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 } else {
-                    Text("Valider mon paiement")
+                    Text(stringResource(R.string.submit_payment))
                 }
             }
         }
